@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Blake's Area — KPI Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Blake KPI">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#080808">
+<link rel="apple-touch-icon" href="data:image/png;base64,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AABkEiQAsJ0AABDUtbv/aQoVAP74g4+u7QIwnwAAkEmgAMA2AgBAJgIAL4ULAO+8937rJoSmf+dZ30+/LtqO3hlP8xTtp8ABYI/x9Plnn1Y/xl7CBYC9L875rkdrb23/Ppw+KNySvq0fh2dF29E742me1ePpG1+7/neBA0Ck4ryHcAEAgFsEDgAsIwAAZCIA8JIAAJCJAMBLAgBAJgIALwkAAIn8RQDgpddaNwAA2J8dAIBELuwA8JIdAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABI6H7rBpT2znvvt25CaPp3nvX99Oui7eid8TSPfppnj376/LNPqx9jL+ECwN4X53zXo7W3tn8fTh8Ubknf1o/Ds6Lt6J3xNM/q8fSNr5VtSOciFec9eAQAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkACw0dPH562bUNWvvnNW5Of89ls/LfJzevWbb/6kyM95+7u/L/JzevXmt58V+TnG0zxf+fjHRX5Orx788OPWTRiaAAAACQkABUTdBSh1938Q9a6t1N3aQdRdgFJ3/wfG0zxRdwHc/W8nABQSLQSULv4H0Rbt0ov1QbQQULr4HxhP80QLAYp/GQJAQbWK5t5qn0etRW5vtc+jVtHcW+3zMJ7miVI0o5xHD+698eDseetGRPHniz+9+vPXfz7eHdycwn//9bc2H+e4n9795MPNP29vcxbq0v305S/G22GaU/iNpzbj6Y8/+Gjzz9vbnMJfop8yEQAKOp5gUZVeiKLST/Pop3n00zwCwDIeAQBAQgIAACTkEQAAJGQHAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASut+6AaU9evKsdRMACOrp4/PWTSjGDgAAJCQAAEBCAgAAJHTvjQdnz1s3AgDYlx0AAEgo3G8B8FfHvxHR4p2rju/4jp/3+PTPI4CAbvtVyD0WAsd3fMfPe3zG4REAACQkAARz1wch1f6gJMd3fMfPe3zGEu4RgAEOQC2RHqPYAQCAhAQAAEgo3CMA2r8L2PEd3/HzHp9xCACBtf49YMd3fMfPe3z6JwAAQELeAwAACQkAAJCQAAAACb02TdO91o0AAPZlBwAAEhIAACAhAQAAEhIAACAhAQAAEjoEAL8JAAB53LMDAAAJCQAAkJAAAAAJHQcA7wMAgPjuTZMdAABISQAAgIQEAABI6GoA8D4AAIjrVZ23AwAACQkAAJDQTQHAYwAAiOdSfbcDAAAJnQoAdgEAII5rdd0OAAAkdFsAsAsAAOO7sZ7bAQCAhO4KAHYBAGBcJ+u4HQAASGhOALALAADjubV+2wEAgITmBgC7AAAwjjvrth0AAEhoSQCwCwAA/ZtVr+0AAEBCSwOAXQAA6NfsOr1mB0AIAID+LKrPax8BCAEA0I/Fddl7AAAgoS0BwC4AALS3qh5v3QEQAgCgndV1uMQjACEAAPa3qf56DwAAJFQqANgFAID9bK67JXcAhAAAqK9IvS39CEAIAIB6itXZGu8BEAIAoLyi9bXWmwCFAAAop3hdrflbAEIAAGxXpZ7W/jVAIQAA1qtWR/f4HAAhAACWq1o/79f84UcOJ/F8p+MBwKh2uXHe+5MA7QYAwGm71ckWHwUsBADAdbvWx70eAVzlkQAAvNDkxrj1lwHZDQAgs2Z1sHUAmCYhAICcmta/Vo8ArvJIAIAsurjx7SUAHAgCAETVReE/6C0AHAgCAETRVeE/6DUAHAgCAIyqy8J/0HsAOBAEABhF14X/YJQAcCAIANCrIQr/wWgB4EAQAKAXQxX+g1EDwMFxpwsDAOxlyKJ/bPQAcOzqxRAIAChl+IJ/VaQAcJVAAMBa4Qr+Vf8PVDuAuQq655UAAAAASUVORK5CYII=">
+<link rel="icon" type="image/png" href="data:image/png;base64,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AABkEiQAsJ0AABDUtbv/aQoVAP74g4+u7QIwnwAAkEmgAMA2AgBAJgIAL4ULAO+8937rJoSmf+dZ30+/LtqO3hlP8xTtp8ABYI/x9Plnn1Y/xl7CBYC9L875rkdrb23/Ppw+KNySvq0fh2dF29E742me1ePpG1+7/neBA0Ck4ryHcAEAgFsEDgAsIwAAZCIA8JIAAJCJAMBLAgBAJgIALwkAAIn8RQDgpddaNwAA2J8dAIBELuwA8JIdAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABISAAAgIQEAABI6H7rBpT2znvvt25CaPp3nvX99Oui7eid8TSPfppnj376/LNPqx9jL+ECwN4X53zXo7W3tn8fTh8Ubknf1o/Ds6Lt6J3xNM/q8fSNr5VtSOciFec9eAQAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkAAAAAkJAACQkACw0dPH562bUNWvvnNW5Of89ls/LfJzevWbb/6kyM95+7u/L/JzevXmt58V+TnG0zxf+fjHRX5Orx788OPWTRiaAAAACQkABUTdBSh1938Q9a6t1N3aQdRdgFJ3/wfG0zxRdwHc/W8nABQSLQSULv4H0Rbt0ov1QbQQULr4HxhP80QLAYp/GQJAQbWK5t5qn0etRW5vtc+jVtHcW+3zMJ7miVI0o5xHD+698eDseetGRPHniz+9+vPXfz7eHdycwn//9bc2H+e4n9795MPNP29vcxbq0v305S/G22GaU/iNpzbj6Y8/+Gjzz9vbnMJfop8yEQAKOp5gUZVeiKLST/Pop3n00zwCwDIeAQBAQgIAACTkEQAAJGQHAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASEgAAICEBAAASut+6AaU9evKsdRMACOrp4/PWTSjGDgAAJCQAAEBCAgAAJHTvjQdnz1s3AgDYlx0AAEgo3G8B8FfHvxHR4p2rju/4jp/3+PTPI4CAbvtVyD0WAsd3fMfPe3zG4REAACQkAARz1wch1f6gJMd3fMfPe3zGEu4RgAEOQC2RHqPYAQCAhAQAAEgo3CMA2r8L2PEd3/HzHp9xCACBtf49YMd3fMfPe3z6JwAAQELeAwAACQkAAJCQAAAACb02TdO91o0AAPZlBwAAEhIAACAhAQAAEhIAACAhAQAAEjoEAL8JAAB53LMDAAAJCQAAkJAAAAAJHQcA7wMAgPjuTZMdAABISQAAgIQEAABI6GoA8D4AAIjrVZ23AwAACQkAAJDQTQHAYwAAiOdSfbcDAAAJnQoAdgEAII5rdd0OAAAkdFsAsAsAAOO7sZ7bAQCAhO4KAHYBAGBcJ+u4HQAASGhOALALAADjubV+2wEAgITmBgC7AAAwjjvrth0AAEhoSQCwCwAA/ZtVr+0AAEBCSwOAXQAA6NfsOr1mB0AIAID+LKrPax8BCAEA0I/Fddl7AAAgoS0BwC4AALS3qh5v3QEQAgCgndV1uMQjACEAAPa3qf56DwAAJFQqANgFAID9bK67JXcAhAAAqK9IvS39CEAIAIB6itXZGu8BEAIAoLyi9bXWmwCFAAAop3hdrflbAEIAAGxXpZ7W/jVAIQAA1qtWR/f4HAAhAACWq1o/79f84UcOJ/F8p+MBwKh2uXHe+5MA7QYAwGm71ckWHwUsBADAdbvWx70eAVzlkQAAvNDkxrj1lwHZDQAgs2Z1sHUAmCYhAICcmta/Vo8ArvJIAIAsurjx7SUAHAgCAETVReE/6C0AHAgCAETRVeE/6DUAHAgCAIyqy8J/0HsAOBAEABhF14X/YJQAcCAIANCrIQr/wWgB4EAQAKAXQxX+g1EDwMFxpwsDAOxlyKJ/bPQAcOzqxRAIAChl+IJ/VaQAcJVAAMBa4Qr+Vf8PVDuAuQq655UAAAAASUVORK5CYII=">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080808;font-family:'Courier New',monospace;color:#e5e5e5;min-height:100vh}
+button{cursor:pointer;font-family:inherit}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const {useState,useMemo,createElement:h,Fragment}=React;
+
+const GOALS={vmp:56,premium:63,vhi:3,perks:20,smartquote:55,multi:52,multiLC:52,multiLR:52,multiWD:52};
+const MINS ={vmp:43.5,premium:54,vhi:2,perks:14,smartquote:40,multi:48,multiLC:48,multiLR:48,multiWD:48};
+const KPI_KEYS=["vmp","premium","vhi","perks","smartquote","multi","multiLC","multiLR","multiWD"];
+const KPI_LABELS=["VMP%","Premium%","VHI","Perks","SmartQ%","Multi: DF","Multi: LC","Multi: LR","Multi: WD"];
+
+const BLAKE_REPS=["Keatyn Nichols","Day Holmes","Eric Short","Nick Berkshire","Jess Bonar","Steve Correa Magana","Maverick Mcfadden","Brody Benson","Brandon Schneider","Pai Pai","Thomas Lindemeyer","Sean Watkins","Charles Hooten","Selena Macias-Guadarrama","Kaleb Wagner","Matt Middleton","Dakota Carter","Alex Prindle","Chad Helmke","Carson Capps","Taylor Meredith","Nels Mickelson","Hayley Reynolds","Damian Fisher","Andrew Upshaw","Justin Dekker","Chance Streby","Joey Casias","Blake Edwards"];
+
+const C={goal:{bg:"#1a472a",text:"#4ade80",border:"#22c55e"},mid:{bg:"#3b2f00",text:"#fbbf24",border:"#f59e0b"},below:{bg:"#4a1515",text:"#f87171",border:"#ef4444"}};
+
+function scoreRep(rep){
+  let s=0;
+  KPI_KEYS.forEach(k=>{
+    if(rep[k]===undefined||rep[k]===null)return;
+    if(rep[k]>=GOALS[k])s+=2;
+    else if(rep[k]>=MINS[k])s+=1;
+  });
+  return s;
+}
+function getStatus(val,goal,min){
+  if(val>=goal)return"goal";
+  if(val>=min)return"mid";
+  return"below";
+}
+function getAvg(data,key){
+  const vals=data.map(r=>r[key]).filter(v=>v!==undefined&&v!==null&&v>-50);
+  if(!vals.length)return null;
+  return vals.reduce((a,b)=>a+b,0)/vals.length;
+}
+
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const JAN_DATA=[
+  {name:"Alex Prindle",vmp:80.77,premium:7,vhi:3,perks:37,smartquote:68.71},
+  {name:"Andrew Upshaw",vmp:70,premium:9,vhi:3,perks:33,smartquote:41.24},
+  {name:"Brandon Schneider",vmp:38.1,premium:13,vhi:4,perks:15,smartquote:53.73},
+  {name:"Brody Benson",vmp:30.77,premium:9,vhi:1,perks:10,smartquote:54.55},
+  {name:"Carson Capps",vmp:72.73,premium:8,vhi:3,perks:13,smartquote:80.55},
+  {name:"Chad Helmke",vmp:44.44,premium:2,vhi:7,perks:10,smartquote:32.43},
+  {name:"Charles Hooten",vmp:55.56,premium:5,vhi:2,perks:12,smartquote:64.08},
+  {name:"Chance Streby",vmp:0,premium:0,vhi:0,perks:0,smartquote:0},
+  {name:"Dakota Carter",vmp:67.65,premium:13,vhi:6,perks:32,smartquote:79.58},
+  {name:"Damian Fisher",vmp:25,premium:5,vhi:9,perks:22,smartquote:96.41},
+  {name:"Day Holmes",vmp:18.75,premium:13,vhi:5,perks:8,smartquote:54.16},
+  {name:"Eric Short",vmp:0,premium:0,vhi:0,perks:0,smartquote:0},
+  {name:"Hayley Reynolds",vmp:64,premium:2,vhi:4,perks:25,smartquote:100},
+  {name:"Jess Bonar",vmp:47.37,premium:6,vhi:0,perks:6,smartquote:19.61},
+  {name:"Justin Dekker",vmp:74.07,premium:10,vhi:6,perks:27,smartquote:59.15},
+  {name:"Kaleb Wagner",vmp:45.45,premium:2,vhi:0,perks:8,smartquote:73.89},
+  {name:"Keatyn Nichols",vmp:12.5,premium:4,vhi:1,perks:14,smartquote:54.17},
+  {name:"Matt Middleton",vmp:58.33,premium:8,vhi:5,perks:26,smartquote:79.67},
+  {name:"Maverick Mcfadden",vmp:23.81,premium:8,vhi:0,perks:6,smartquote:55.18},
+  {name:"Nels Mickelson",vmp:55.17,premium:17,vhi:8,perks:16,smartquote:61.13},
+  {name:"Nick Berkshire",vmp:26.67,premium:12,vhi:1,perks:10,smartquote:15.56},
+  {name:"Pai Pai",vmp:42.42,premium:11,vhi:3,perks:23,smartquote:44.44},
+  {name:"Sean Watkins",vmp:80,premium:13,vhi:4,perks:15,smartquote:0},
+  {name:"Selena Macias-Guadarrama",vmp:52.94,premium:11,vhi:3,perks:17,smartquote:29.73},
+  {name:"Steve Correa Magana",vmp:27.78,premium:4,vhi:0,perks:10,smartquote:44.44},
+  {name:"Taylor Meredith",vmp:51.43,premium:10,vhi:3,perks:21,smartquote:53.85},
+  {name:"Thomas Lindemeyer",vmp:52.38,premium:8,vhi:2,perks:12,smartquote:55.92},
+  {name:"Joey Casias",vmp:75,premium:12,vhi:6,perks:27,smartquote:70.11},
+];
+
+const FEB_DATA=[
+  {name:"Alex Prindle",vmp:61.9,premium:63.64,vhi:2,perks:24,smartquote:84.69},
+  {name:"Andrew Upshaw",vmp:35.29,premium:52.94,vhi:11,perks:14,smartquote:5.71},
+  {name:"Brandon Schneider",vmp:63.16,premium:62.79,vhi:16,perks:16,smartquote:71.11},
+  {name:"Brody Benson",vmp:70,premium:58.54,vhi:4,perks:17,smartquote:54.52},
+  {name:"Carson Capps",vmp:76.19,premium:68.09,vhi:9,perks:14,smartquote:78.77},
+  {name:"Chad Helmke",vmp:50,premium:71.43,vhi:4,perks:13,smartquote:57.14},
+  {name:"Charles Hooten",vmp:42.86,premium:77.27,vhi:2,perks:16,smartquote:48.22},
+  {name:"Chance Streby",vmp:36.36,premium:77.78,vhi:3,perks:8,smartquote:0},
+  {name:"Dakota Carter",vmp:66.67,premium:64.58,vhi:20,perks:26,smartquote:101.96},
+  {name:"Damian Fisher",vmp:76.92,premium:75,vhi:18,perks:20,smartquote:58.82},
+  {name:"Day Holmes",vmp:100,premium:50,vhi:2,perks:5,smartquote:189.68},
+  {name:"Eric Short",vmp:0,premium:0,vhi:0,perks:0,smartquote:0},
+  {name:"Hayley Reynolds",vmp:71.43,premium:56.76,vhi:22,perks:42,smartquote:65.09},
+  {name:"Jess Bonar",vmp:50,premium:72.22,vhi:13,perks:20,smartquote:74.23},
+  {name:"Justin Dekker",vmp:64.29,premium:62.96,vhi:22,perks:33,smartquote:86.49},
+  {name:"Kaleb Wagner",vmp:70.59,premium:48.15,vhi:11,perks:13,smartquote:70.63},
+  {name:"Keatyn Nichols",vmp:23.08,premium:43.48,vhi:4,perks:9,smartquote:83.33},
+  {name:"Matt Middleton",vmp:75,premium:70.83,vhi:3,perks:9,smartquote:78.64},
+  {name:"Maverick Mcfadden",vmp:63.16,premium:60.61,vhi:2,perks:20,smartquote:97.12},
+  {name:"Nels Mickelson",vmp:56.52,premium:56.86,vhi:6,perks:18,smartquote:80.53},
+  {name:"Nick Berkshire",vmp:30.43,premium:62.16,vhi:16,perks:17,smartquote:64.08},
+  {name:"Pai Pai",vmp:45,premium:71.88,vhi:18,perks:13,smartquote:24.24},
+  {name:"Sean Watkins",vmp:55.56,premium:88.46,vhi:14,perks:17,smartquote:0},
+  {name:"Selena Macias-Guadarrama",vmp:70.59,premium:69.23,vhi:4,perks:17,smartquote:41.94},
+  {name:"Steve Correa Magana",vmp:16.67,premium:69.23,vhi:5,perks:18,smartquote:44.44},
+  {name:"Taylor Meredith",vmp:57.89,premium:62.5,vhi:3,perks:35,smartquote:78.53},
+  {name:"Thomas Lindemeyer",vmp:100,premium:64.29,vhi:6,perks:18,smartquote:73.53},
+  {name:"Joey Casias",vmp:50,premium:72.73,vhi:9,perks:22,smartquote:78.5},
+];
+
+const MAR_DATA=[
+  {name:"Alex Prindle",vmp:40.74,premium:69.7,vhi:3,perks:16,smartquote:20.93},
+  {name:"Andrew Upshaw",vmp:35.29,premium:68.75,vhi:2,perks:34,smartquote:12.07},
+  {name:"Brandon Schneider",vmp:60.87,premium:45.16,vhi:5,perks:29,smartquote:36.96},
+  {name:"Brody Benson",vmp:15.38,premium:70.27,vhi:1,perks:21,smartquote:4.44},
+  {name:"Carson Capps",vmp:56,premium:57.14,vhi:5,perks:18,smartquote:88.32},
+  {name:"Chad Helmke",vmp:55.56,premium:86.05,vhi:4,perks:10,smartquote:26.29},
+  {name:"Charles Hooten",vmp:55.56,premium:0,vhi:0,perks:9,smartquote:29.17},
+  {name:"Chance Streby",vmp:0,premium:0,vhi:0,perks:0,smartquote:0},
+  {name:"Dakota Carter",vmp:92,premium:68.42,vhi:10,perks:36,smartquote:80.82},
+  {name:"Damian Fisher",vmp:81.25,premium:66.67,vhi:5,perks:25,smartquote:83.25},
+  {name:"Day Holmes",vmp:50,premium:39.29,vhi:3,perks:12,smartquote:65.63},
+  {name:"Eric Short",vmp:60.71,premium:74.47,vhi:4,perks:19,smartquote:60.34},
+  {name:"Hayley Reynolds",vmp:69.23,premium:58.62,vhi:2,perks:13,smartquote:71.79},
+  {name:"Jess Bonar",vmp:36.84,premium:68,vhi:0,perks:10,smartquote:84.38},
+  {name:"Justin Dekker",vmp:44.44,premium:86.96,vhi:6,perks:33,smartquote:66.73},
+  {name:"Kaleb Wagner",vmp:75,premium:75,vhi:0,perks:16,smartquote:90.16},
+  {name:"Keatyn Nichols",vmp:56.25,premium:60,vhi:2,perks:13,smartquote:67.74},
+  {name:"Matt Middleton",vmp:41.67,premium:55.56,vhi:4,perks:17,smartquote:100},
+  {name:"Maverick Mcfadden",vmp:56.25,premium:60.71,vhi:2,perks:13,smartquote:106.06},
+  {name:"Nels Mickelson",vmp:25.93,premium:65.31,vhi:8,perks:27,smartquote:60.78},
+  {name:"Nick Berkshire",vmp:40.63,premium:86.27,vhi:6,perks:29,smartquote:88},
+  {name:"Pai Pai",vmp:60,premium:83.33,vhi:5,perks:25,smartquote:53.61},
+  {name:"Sean Watkins",vmp:100,premium:87.5,vhi:0,perks:10,smartquote:0},
+  {name:"Selena Macias-Guadarrama",vmp:66.67,premium:59.09,vhi:3,perks:10,smartquote:75},
+  {name:"Steve Correa Magana",vmp:22.22,premium:69.23,vhi:0,perks:9,smartquote:44.9},
+  {name:"Taylor Meredith",vmp:39.39,premium:58.7,vhi:2,perks:21,smartquote:79.7},
+  {name:"Thomas Lindemeyer",vmp:18.18,premium:61.11,vhi:2,perks:11,smartquote:6.28},
+  {name:"Joey Casias",vmp:94.44,premium:69.7,vhi:3,perks:13,smartquote:59.08},
+];
+
+const APR_DATA=[
+  {name:"Alex Prindle",vmp:90.91,premium:91.67,vhi:1,perks:7,smartquote:42.86},
+  {name:"Andrew Upshaw",vmp:43.75,premium:65.63,vhi:2,perks:30,smartquote:34.21},
+  {name:"Brandon Schneider",vmp:34.78,premium:76.47,vhi:5,perks:9,smartquote:70},
+  {name:"Brody Benson",vmp:68.18,premium:52.63,vhi:1,perks:12,smartquote:0},
+  {name:"Carson Capps",vmp:45.45,premium:59.38,vhi:7,perks:28,smartquote:52.78},
+  {name:"Chad Helmke",vmp:62.96,premium:72.97,vhi:1,perks:10,smartquote:7.5},
+  {name:"Charles Hooten",vmp:66.67,premium:56.25,vhi:0,perks:9,smartquote:87.38},
+  {name:"Chance Streby",vmp:52.94,premium:82.76,vhi:4,perks:17,smartquote:44.83},
+  {name:"Dakota Carter",vmp:88.57,premium:65.91,vhi:18,perks:60,smartquote:130.23},
+  {name:"Damian Fisher",vmp:45.45,premium:75,vhi:2,perks:18,smartquote:84.62},
+  {name:"Day Holmes",vmp:20,premium:38.89,vhi:2,perks:14,smartquote:57.14},
+  {name:"Eric Short",vmp:36,premium:68.29,vhi:6,perks:23,smartquote:215},
+  {name:"Hayley Reynolds",vmp:52.94,premium:55.56,vhi:2,perks:25,smartquote:58.33},
+  {name:"Jess Bonar",vmp:13.33,premium:65.38,vhi:1,perks:5,smartquote:0},
+  {name:"Justin Dekker",vmp:56,premium:78.57,vhi:3,perks:22,smartquote:75.68},
+  {name:"Kaleb Wagner",vmp:87.88,premium:81.58,vhi:2,perks:22,smartquote:46.31},
+  {name:"Keatyn Nichols",vmp:45.45,premium:66.67,vhi:2,perks:20,smartquote:58.06},
+  {name:"Matt Middleton",vmp:45,premium:62.96,vhi:2,perks:19,smartquote:70.33},
+  {name:"Maverick Mcfadden",vmp:29.41,premium:65.38,vhi:1,perks:14,smartquote:70.13},
+  {name:"Nels Mickelson",vmp:57.89,premium:62.07,vhi:8,perks:14,smartquote:69.14},
+  {name:"Nick Berkshire",vmp:45.83,premium:81.4,vhi:3,perks:24,smartquote:88.64},
+  {name:"Pai Pai",vmp:48,premium:54.55,vhi:7,perks:18,smartquote:72.6},
+  {name:"Sean Watkins",vmp:54.84,premium:82.35,vhi:1,perks:13,smartquote:0},
+  {name:"Selena Macias-Guadarrama",vmp:72.41,premium:68.75,vhi:2,perks:18,smartquote:43.48},
+  {name:"Steve Correa Magana",vmp:44.44,premium:58.62,vhi:0,perks:15,smartquote:81.28},
+  {name:"Taylor Meredith",vmp:52.38,premium:66.67,vhi:5,perks:31,smartquote:73.33},
+  {name:"Thomas Lindemeyer",vmp:33.33,premium:70.83,vhi:3,perks:7,smartquote:64.08},
+  {name:"Joey Casias",vmp:61.11,premium:72.97,vhi:4,perks:33,smartquote:65.12},
+];
+
+const MAY_DATA=[
+  {name:"Blake Edwards",vmp:31.82,premium:39.13,vhi:4,perks:18,smartquote:26.88,multiLC:100.00,multiLR:60.0,multiWD:40.0},
+  {name:"Alex Prindle",vmp:45.45,premium:80.0,vhi:1,perks:8,smartquote:41.94,multiLC:52.94,multiLR:0.0},
+  {name:"Andrew Upshaw",vmp:59.09,premium:75.0,vhi:2,perks:17,smartquote:5.71,multi:0.0,multiLC:0.0,multiLR:64.71,multiWD:33.33},
+  {name:"Brandon Schneider",vmp:28.21,premium:77.78,vhi:3,perks:20,smartquote:0,multiLC:45.45,multiLR:54.55},
+  {name:"Brody Benson",vmp:22.22,premium:78.57,vhi:3,perks:13,smartquote:0,multiLC:10.53},
+  {name:"Carson Capps",vmp:90.0,premium:71.43,vhi:3,perks:12,smartquote:99.73,multiLC:0.0,multiWD:59.09},
+  {name:"Chad Helmke",vmp:69.23,premium:94.44,vhi:2,perks:10,smartquote:30.0,multi:0.0,multiLC:36.36,multiLR:60.0},
+  {name:"Chance Streby",vmp:33.33,premium:86.21,vhi:3,perks:11,smartquote:0,multi:0.0,multiLC:66.67,multiLR:40.0},
+  {name:"Charles Hooten",vmp:27.27,premium:41.67,vhi:0,perks:6,smartquote:47.12,multiLC:31.82,multiWD:0.0},
+  {name:"Dakota Carter",vmp:100.0,premium:72.41,vhi:4,perks:39,smartquote:47.6,multi:74.42,multi:74.42,multiLR:0.0,multiWD:100.0},
+  {name:"Damian Fisher",vmp:44.44,premium:69.23,vhi:2,perks:12,smartquote:30.0,multi:0.0,multiLR:0.0,multiWD:31.25},
+  {name:"Day Holmes",vmp:20.0,premium:66.67,vhi:3,perks:8,smartquote:83.22,multi:29.41,multiWD:0.0},
+  {name:"Eric Short",vmp:47.37,premium:62.5,vhi:1,perks:6,smartquote:33.23,multi:46.67,multiLC:0.0},
+  {name:"Hayley Reynolds",vmp:36.36,premium:53.33,vhi:2,perks:19,smartquote:8.7,multiWD:42.86},
+  {name:"Jess Bonar",vmp:100.0,premium:76.47,vhi:1,perks:10,smartquote:37.5,multiLC:100.0,multiLR:40.0},
+  {name:"Joey Casias",vmp:82.35,premium:82.05,vhi:4,perks:32,smartquote:31.76,multi:54.55,multiLR:0.0,multiWD:25.0},
+  {name:"Justin Dekker",vmp:44.83,premium:78.38,vhi:3,perks:19,smartquote:46.39,multi:0.0,multiLC:38.89,multiLR:51.85,multiWD:66.67},
+  {name:"Kaleb Wagner",vmp:64.71,premium:88.24,vhi:1,perks:14,smartquote:36.0,multi:0.0,multiLC:50.0,multiLR:80.0,multiWD:36.36},
+  {name:"Keatyn Nichols",vmp:25.0,premium:63.16,vhi:1,perks:15,smartquote:54.55,multi:39.13},
+  {name:"Matt Middleton",vmp:11.11,premium:73.33,vhi:2,perks:4,smartquote:5.0,multiLC:30.0,multiLR:60.0},
+  {name:"Maverick Mcfadden",vmp:25.0,premium:81.48,vhi:1,perks:3,smartquote:51.86,multi:0.0,multiLC:37.5},
+  {name:"Nels Mickelson",vmp:56.52,premium:68.0,vhi:5,perks:8,smartquote:29.63,multi:28.57},
+  {name:"Nick Berkshire",vmp:40.0,premium:87.5,vhi:4,perks:14,smartquote:20.59,multi:42.11,multiLC:50.0,multiLR:42.86,multiWD:0.0},
+  {name:"Pai Pai",vmp:69.23,premium:76.47,vhi:3,perks:1,smartquote:43.75,multi:50.0,multiLC:100.0,multiLR:0.0,multiWD:44.44},
+  {name:"Sean Watkins",vmp:16.67,premium:80.0,vhi:1,perks:7,smartquote:18.75,multiLC:18.18},
+  {name:"Selena Macias-Guadarrama",vmp:84.62,premium:94.44,vhi:2,perks:12,smartquote:15.63,multiWD:0.0},
+  {name:"Steve Correa Magana",vmp:42.86,premium:65.0,vhi:0,perks:3,smartquote:59.09,multiLR:31.82,multiWD:33.33},
+  {name:"Taylor Meredith",vmp:59.09,premium:70.0,vhi:5,perks:23,smartquote:54.26,multi:54.72,multiWD:0.0},
+  {name:"Thomas Lindemeyer",vmp:41.67,premium:78.26,vhi:2,perks:9,smartquote:71.0,multi:36.36,multiLC:33.33,multiLR:0.0}
+];
+
+const ALL_MONTHS=[
+  {label:"January 2026",data:JAN_DATA},
+  {label:"February 2026",data:FEB_DATA},
+  {label:"March 2026",data:MAR_DATA},
+  {label:"April 2026",data:APR_DATA},
+  {label:"May 2026",data:MAY_DATA},
+];
+
+// ── UI Helpers ────────────────────────────────────────────────────────────────
+function badge(val,key){
+  if(val===undefined||val===null)return h('span',{style:{color:'#333',fontSize:12}},'—');
+  const st=getStatus(val,GOALS[key],MINS[key]);
+  const c=C[st];
+  const isC=key==='vhi'||key==='perks';
+  const txt=isC?String(val):Number(val).toFixed(1)+'%';
+  return h('span',{style:{background:c.bg,color:c.text,border:'1px solid '+c.border,borderRadius:6,padding:'2px 7px',fontSize:12,fontWeight:700,fontFamily:'monospace',display:'inline-block',minWidth:54,textAlign:'center'}},txt);
+}
+
+function ScoreDots({score,max}){
+  max=max||12;
+  return h('div',{style:{display:'flex',gap:2}},
+    [...Array(max)].map((_,i)=>h('div',{key:i,style:{width:6,height:6,borderRadius:'50%',background:i<score?'#22c55e':'#1e1e1e',border:'1px solid '+(i<score?'#4ade80':'#333')}}))
+  );
+}
+
+function Btn({label,active,onClick,col}){
+  col=col||'#22c55e';
+  return h('button',{onClick,style:{background:active?col+'22':'#0f0f0f',border:'1px solid '+(active?col:'#222'),borderRadius:6,color:active?col:'#555',padding:'5px 11px',fontSize:11,fontWeight:700,letterSpacing:1,cursor:'pointer',fontFamily:'inherit'}},label);
+}
+
+// ── Radar ─────────────────────────────────────────────────────────────────────
+function normalize(val,key){
+  const mx={vmp:100,premium:100,vhi:5,perks:30,smartquote:100,multi:100,multiLC:100,multiLR:100,multiWD:100};
+  return Math.max(0,Math.min(1.3,(val||0)/mx[key]));
+}
+
+function RadarChart({rep1,rep2,allReps}){
+  const keys=KPI_KEYS;
+  const n=keys.length;
+  const cx=160,cy=160,r=110;
+  const ang=keys.map((_,i)=>(Math.PI*2*i)/n-Math.PI/2);
+  const pt=(norm,i)=>[cx+norm*r*Math.cos(ang[i]),cy+norm*r*Math.sin(ang[i])];
+  const pts=rep=>keys.map((k,i)=>pt(normalize(rep[k]||0,k),i));
+  const str=ps=>ps.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const r1=pts(rep1),r2=rep2?pts(rep2):null;
+  const gPts=keys.map((k,i)=>pt(normalize(GOALS[k],k),i));
+  const mPts=keys.map((k,i)=>pt(normalize(MINS[k],k),i));
+  const rank=(rep,key)=>[...allReps].sort((a,b)=>(b[key]||0)-(a[key]||0)).findIndex(r=>r.name===rep.name)+1;
+
+  return h('div',{style:{display:'flex',gap:20,flexWrap:'wrap',alignItems:'flex-start'}},
+    h('svg',{width:320,height:320,style:{flexShrink:0}},
+      [0.25,0.5,0.75,1].map(ring=>h('polygon',{key:ring,points:ang.map((a,i)=>((cx+ring*r*Math.cos(a)).toFixed(1)+','+(cy+ring*r*Math.sin(a)).toFixed(1))).join(' '),fill:'none',stroke:'#1e1e1e',strokeWidth:1})),
+      ang.map((a,i)=>h('line',{key:i,x1:cx,y1:cy,x2:(cx+r*1.1*Math.cos(a)).toFixed(1),y2:(cy+r*1.1*Math.sin(a)).toFixed(1),stroke:'#222',strokeWidth:1})),
+      h('polygon',{points:str(mPts),fill:'#f59e0b08',stroke:'#f59e0b',strokeWidth:1.5,strokeDasharray:'4,3'}),
+      h('polygon',{points:str(gPts),fill:'#22c55e08',stroke:'#22c55e',strokeWidth:1.5,strokeDasharray:'4,3'}),
+      r2&&h('polygon',{points:str(r2),fill:'#f472b620',stroke:'#f472b6',strokeWidth:2}),
+      r2&&r2.map((p,i)=>h('circle',{key:i,cx:p[0].toFixed(1),cy:p[1].toFixed(1),r:4,fill:'#f472b6'})),
+      h('polygon',{points:str(r1),fill:'#38bdf820',stroke:'#38bdf8',strokeWidth:2.5}),
+      r1.map((p,i)=>h('circle',{key:i,cx:p[0].toFixed(1),cy:p[1].toFixed(1),r:5,fill:'#38bdf8'})),
+      KPI_LABELS.map((lbl,i)=>h('text',{key:i,x:(cx+(r+22)*Math.cos(ang[i])).toFixed(1),y:(cy+(r+22)*Math.sin(ang[i])).toFixed(1),textAnchor:'middle',dominantBaseline:'middle',fill:'#888',fontSize:10,fontWeight:700},lbl)),
+      h('circle',{cx,cy,r:3,fill:'#333'})
+    ),
+    h('div',{style:{flex:1,minWidth:180}},
+      h('div',{style:{display:'flex',gap:14,marginBottom:12,flexWrap:'wrap'}},
+        h('div',{style:{display:'flex',alignItems:'center',gap:6}},h('div',{style:{width:12,height:3,background:'#38bdf8'}}),h('span',{style:{fontSize:12,fontWeight:700,color:'#38bdf8'}},rep1.name)),
+        rep2&&h('div',{style:{display:'flex',alignItems:'center',gap:6}},h('div',{style:{width:12,height:3,background:'#f472b6'}}),h('span',{style:{fontSize:12,fontWeight:700,color:'#f472b6'}},rep2.name))
+      ),
+      h('table',{style:{width:'100%',borderCollapse:'collapse'}},
+        h('thead',null,h('tr',null,
+          h('th',{style:{fontSize:10,color:'#444',textAlign:'left',padding:'3px 6px',letterSpacing:1}},'KPI'),
+          h('th',{style:{fontSize:10,color:'#38bdf8',textAlign:'center',padding:'3px 6px'}},rep1.name.split(' ')[0].toUpperCase()),
+          rep2&&h('th',{style:{fontSize:10,color:'#f472b6',textAlign:'center',padding:'3px 6px'}},rep2.name.split(' ')[0].toUpperCase()),
+          h('th',{style:{fontSize:10,color:'#444',textAlign:'center',padding:'3px 6px'}},'GOAL')
+        )),
+        h('tbody',null,keys.map((k,i)=>{
+          const isC=k==='vhi'||k==='perks';
+          const fv=v=>v===undefined||v===null?'—':isC?v:Number(v).toFixed(1)+'%';
+          const s1=getStatus(rep1[k]||0,GOALS[k],MINS[k]);
+          const s2=rep2?getStatus(rep2[k]||0,GOALS[k],MINS[k]):null;
+          return h('tr',{key:k,style:{borderBottom:'1px solid #141414'}},
+            h('td',{style:{padding:'6px',fontSize:11,color:'#666',fontWeight:700}},KPI_LABELS[i]),
+            h('td',{style:{padding:'6px',textAlign:'center'}},
+              h('span',{style:{color:C[s1].text,fontWeight:700,fontSize:12}},fv(rep1[k])),
+              h('div',{style:{fontSize:9,color:'#444',marginTop:1}},'#'+rank(rep1,k)+' / '+allReps.length)
+            ),
+            rep2&&h('td',{style:{padding:'6px',textAlign:'center'}},
+              h('span',{style:{color:C[s2].text,fontWeight:700,fontSize:12}},fv(rep2[k])),
+              h('div',{style:{fontSize:9,color:'#444',marginTop:1}},'#'+rank(rep2,k)+' / '+allReps.length)
+            ),
+            h('td',{style:{padding:'6px',textAlign:'center',fontSize:11,color:'#333'}},fv(GOALS[k]))
+          );
+        }))
+      )
+    )
+  );
+}
+
+// ── Trend Chart ───────────────────────────────────────────────────────────────
+function TrendChart({rep1,rep2,allMonths,selKPI,onSelKPI}){
+  const isC=selKPI==='vhi'||selKPI==='perks';
+  const fv=v=>isC?Number(v).toFixed(1):Number(v).toFixed(1)+'%';
+  const getPts=rep=>allMonths.map(m=>{
+    const f=m.data.find(d=>d.name.toLowerCase()===rep.name.toLowerCase());
+    const val=f?f[selKPI]:null;
+    return{month:m.label,value:(val!==undefined&&val!==null&&val>-50)?val:null};
+  }).filter(p=>p.value!==null);
+
+  const p1=getPts(rep1),p2=rep2?getPts(rep2):[];
+  if(p1.length<1)return h('div',{style:{color:'#333',fontSize:12,padding:'10px 0'}},'No data available for this KPI.');
+
+  const allV=[...p1.map(p=>p.value),...p2.map(p=>p.value)];
+  const lo=Math.min(...allV,MINS[selKPI])*0.85;
+  const hi=Math.max(...allV,GOALS[selKPI])*1.1;
+  const rng=hi-lo||1;
+  const W=420,H=160,PL=8,PR=40,PT=16,PB=30;
+  const cW=W-PL-PR,cH=H-PT-PB;
+  const xp=(i,tot)=>tot<2?PL+cW/2:PL+(i/(tot-1))*cW;
+  const yp=v=>PT+cH-((v-lo)/rng)*cH;
+  const gY=yp(GOALS[selKPI]),mY=yp(MINS[selKPI]);
+  const mkPath=pts=>pts.map((p,i)=>(i===0?'M':'L')+xp(i,pts.length).toFixed(1)+','+yp(p.value).toFixed(1)).join(' ');
+
+  return h('div',{style:{marginTop:18}},
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8,flexWrap:'wrap',gap:6}},
+      h('div',{style:{display:'flex',gap:12,alignItems:'center',flexWrap:'wrap'}},
+        h('span',{style:{fontSize:11,fontWeight:900,color:'#aaa',letterSpacing:1}},'TREND'),
+        h('div',{style:{display:'flex',alignItems:'center',gap:5}},h('div',{style:{width:14,height:3,background:'#38bdf8'}}),h('span',{style:{fontSize:10,color:'#38bdf8',fontWeight:700}},rep1.name.split(' ')[0])),
+        rep2&&h('div',{style:{display:'flex',alignItems:'center',gap:5}},h('div',{style:{width:14,height:3,background:'#f472b6'}}),h('span',{style:{fontSize:10,color:'#f472b6',fontWeight:700}},rep2.name.split(' ')[0]))
+      ),
+      h('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}},
+        KPI_KEYS.map((k,i)=>h('button',{key:k,onClick:()=>onSelKPI(k),style:{background:selKPI===k?'#22c55e22':'#0f0f0f',border:'1px solid '+(selKPI===k?'#22c55e':'#222'),borderRadius:4,color:selKPI===k?'#22c55e':'#555',padding:'3px 8px',cursor:'pointer',fontSize:10,fontWeight:700,fontFamily:'inherit'}},KPI_LABELS[i]))
+      )
+    ),
+    h('div',{style:{overflowX:'auto'}},
+      h('svg',{width:W,height:H,style:{display:'block'}},
+        GOALS[selKPI]>=lo&&h('line',{x1:PL,y1:gY.toFixed(1),x2:W-PR,y2:gY.toFixed(1),stroke:'#22c55e',strokeWidth:1,strokeDasharray:'4,3'}),
+        GOALS[selKPI]>=lo&&h('text',{x:W-PR+3,y:gY.toFixed(1),fill:'#22c55e',fontSize:8,dominantBaseline:'middle'},'GOAL'),
+        MINS[selKPI]>=lo&&h('line',{x1:PL,y1:mY.toFixed(1),x2:W-PR,y2:mY.toFixed(1),stroke:'#f59e0b',strokeWidth:1,strokeDasharray:'4,3'}),
+        MINS[selKPI]>=lo&&h('text',{x:W-PR+3,y:mY.toFixed(1),fill:'#f59e0b',fontSize:8,dominantBaseline:'middle'},'MIN'),
+        p2.length>0&&h('path',{d:mkPath(p2),fill:'none',stroke:'#f472b6',strokeWidth:2,strokeDasharray:'5,3'}),
+        p2.map((p,i)=>h('g',{key:i},
+          h('circle',{cx:xp(i,p2.length).toFixed(1),cy:yp(p.value).toFixed(1),r:4,fill:'#f472b6',stroke:'#080808',strokeWidth:1.5}),
+          h('text',{x:xp(i,p2.length).toFixed(1),y:(yp(p.value)+13).toFixed(1),textAnchor:'middle',fill:'#f472b6',fontSize:8,fontWeight:700},fv(p.value))
+        )),
+        p1.length>1&&h('path',{d:mkPath(p1),fill:'none',stroke:'#38bdf8',strokeWidth:2.5}),
+        p1.length>1&&h('path',{d:mkPath(p1)+' L'+xp(p1.length-1,p1.length).toFixed(1)+','+(PT+cH)+' L'+PL+','+(PT+cH)+' Z',fill:'#38bdf808'}),
+        p1.map((p,i)=>{
+          const st=getStatus(p.value,GOALS[selKPI],MINS[selKPI]);
+          const col=C[st].border;
+          const cx2=xp(i,p1.length),cy2=yp(p.value);
+          return h('g',{key:i},
+            h('circle',{cx:cx2.toFixed(1),cy:cy2.toFixed(1),r:5,fill:col,stroke:'#080808',strokeWidth:1.5}),
+            h('text',{x:cx2.toFixed(1),y:(cy2-10).toFixed(1),textAnchor:'middle',fill:col,fontSize:9,fontWeight:700},fv(p.value)),
+            h('text',{x:cx2.toFixed(1),y:(PT+cH+14).toFixed(1),textAnchor:'middle',fill:'#444',fontSize:8},p.month.replace(' 2026',''))
+          );
+        })
+      )
+    )
+  );
+}
+
+
+// ── SCHEDULE ──────────────────────────────────────────────────────────────────
+const NAME_MAP={Upshaw:"Andrew Upshaw",Thomas:"Thomas Lindemeyer",Maverick:"Maverick Mcfadden",Eric:"Eric Short",Taylor:"Taylor Meredith",Day:"Day Holmes",Nels:"Nels Mickelson",Carson:"Carson Capps",Berk:"Nick Berkshire",Keatyn:"Keatyn Nichols",Pai:"Pai Pai",Dekker:"Justin Dekker",Damian:"Damian Fisher",Kaleb:"Kaleb Wagner",Alex:"Alex Prindle",Sean:"Sean Watkins",Brody:"Brody Benson",Matt:"Matt Middleton",Hooton:"Charles Hooten",Jess:"Jess Bonar",Brandon:"Brandon Schneider",Steve:"Steve Correa Magana",Chad:"Chad Helmke",Hayley:"Hayley Reynolds",Dakota:"Dakota Carter",Blake:"Blake Edwards",Chance:"Chance Streby",Casias:"Joey Casias"};
+function fullName(n){return NAME_MAP[n]||n;}
+
+const STORES={
+  Defiance:{color:"#a78bfa",short:"DEF",
+    schedule:{
+      0:["Upshaw","Thomas","Maverick","Carson","Eric"],
+      1:["Taylor","Nels","Upshaw","Keatyn","Day"],
+      2:["Nels","Day","Maverick","Dakota","Carson","Eric"],
+      3:["Nels","Day","Dakota","Carson","Thomas","Keatyn"],
+      4:["Nels","Taylor","Berk","Thomas","Pai","Keatyn"],
+      5:["Nels","Taylor","Blake","Dakota","Upshaw","Pai","Day","Keatyn"],
+      6:["Nels","Taylor","Berk","Dakota","Carson","Day","Keatyn"],
+    }
+  },
+  "Leo Crossing":{color:"#38bdf8",short:"LEO",
+    schedule:{
+      0:["Dekker","Damian"],
+      1:["Thomas","Kaleb","Maverick","Brody","Sean"],
+      2:["Dekker","Alex","Sean","Kaleb"],
+      3:["Brody","Alex","Matt","Hooton","Sean","Damian"],
+      4:["Alex","Sean","Dakota","Hooton","Brody"],
+      5:["Dekker","Thomas","Maverick","Sean","Hooton","Alex"],
+      6:["Dekker","Sean","Eric","Alex","Kaleb","Matt"],
+    }
+  },
+  "Lima Road":{color:"#fb923c",short:"LMA",
+    schedule:{
+      0:["Jess","Berk"],
+      1:["Jess","Berk","Brandon"],
+      2:["Jess","Upshaw","Brandon"],
+      3:["Brandon","Jess","Steve","Chad"],
+      4:["Brandon","Jess","Steve","Matt"],
+      5:["Brandon","Jess","Steve","Matt"],
+      6:["Brandon","Steve"],
+    }
+  },
+  Waynedale:{color:"#f472b6",short:"WYN",
+    schedule:{
+      0:["Hayley","Carson"],
+      1:["Damian"],
+      2:["Damian","Hayley","Pai","Brody"],
+      3:["Hayley","Pai"],
+      4:["Hayley","Chad","Kaleb","Carson","Pai"],
+      5:["Hayley","Kaleb","Carson","Damian"],
+      6:["Hayley","Pai","Damian","Carson"],
+    }
+  },
+};
+
+function getRepsByDay(dayOfWeek){
+  const result={};
+  Object.entries(STORES).forEach(([store,info])=>{
+    const reps=(info.schedule[dayOfWeek]||[]).map(fullName);
+    if(reps.length)result[store]={color:info.color,reps};
+  });
+  return result;
+}
+
+function CalendarTab({scored,allMonths,activeMo}){
+  const [selCalRep,setSelCalRep]=useState(null);
+  const [selDay,setSelDay]=useState(null);
+  const [calMonth,setCalMonth]=useState(4);
+  const [calYear,setCalYear]=useState(2026);
+  const [kpiIndex,setKpiIndex]=useState(0);
+  const [touchStartX,setTouchStartX]=useState(null);
+
+  const MONTH_NAMES=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const today=new Date(2026,4,22);
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const cells=[];
+  for(let i=0;i<firstDay;i++)cells.push(null);
+  for(let d=1;d<=daysInMonth;d++)cells.push(d);
+  while(cells.length%7!==0)cells.push(null);
+  const weeks=[];
+  for(let i=0;i<cells.length;i+=7)weeks.push(cells.slice(i,i+7));
+
+  function repMetrics(name){
+    const mo=allMonths[activeMo];
+    if(!mo)return null;
+    return mo.data.find(r=>r.name.toLowerCase()===name.toLowerCase());
+  }
+
+  const activeKPIs=KPI_KEYS.filter(k=>k!=='multi'||(activeMo===4));
+
+  // Swipe handlers for KPI carousel
+  function onTouchStart(e){setTouchStartX(e.touches[0].clientX);}
+  function onTouchEnd(e){
+    if(touchStartX===null)return;
+    const diff=touchStartX-e.changedTouches[0].clientX;
+    if(Math.abs(diff)>40){
+      if(diff>0)setKpiIndex(i=>Math.min(i+1,activeKPIs.length-1));
+      else setKpiIndex(i=>Math.max(i-1,0));
+    }
+    setTouchStartX(null);
+  }
+
+  const metricPanel=selCalRep&&(()=>{
+    const rep=repMetrics(selCalRep);
+    const sc=scored.find(r=>r.name.toLowerCase()===selCalRep.toLowerCase());
+    const k=activeKPIs[kpiIndex];
+    const val=rep?rep[k]:null;
+    const isC=k==='vhi'||k==='perks';
+    const st=val!==null&&val!==undefined?getStatus(val,GOALS[k],MINS[k]):'below';
+    const c=C[st];
+    const rankNum=sc?[...scored].sort((a,b)=>(b[k]||0)-(a[k]||0)).findIndex(r=>r.name===sc.name)+1:null;
+
+    return h('div',{style:{background:'#080f18',border:'1px solid #38bdf844',borderRadius:12,padding:16,marginBottom:14}},
+      // Header
+      h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:14}},
+        h('div',null,
+          h('div',{style:{fontSize:16,fontWeight:900,color:'#38bdf8'}},selCalRep),
+          h('div',{style:{fontSize:10,color:'#444',marginTop:2,letterSpacing:1}},allMonths[activeMo]?.label+' METRICS')
+        ),
+        h('button',{onClick:()=>setSelCalRep(null),style:{background:'#0f0f0f',border:'1px solid #222',borderRadius:6,color:'#555',padding:'6px 12px',cursor:'pointer',fontSize:11,fontFamily:'inherit'}},'✕')
+      ),
+
+      rep?h(Fragment,null,
+        // KPI Dots nav
+        h('div',{style:{display:'flex',justifyContent:'center',gap:6,marginBottom:12}},
+          activeKPIs.map((k2,i)=>{
+            const v2=rep[k2];
+            const s2=v2!==null&&v2!==undefined?getStatus(v2,GOALS[k2],MINS[k2]):'below';
+            return h('button',{key:k2,onClick:()=>setKpiIndex(i),style:{width:i===kpiIndex?24:8,height:8,borderRadius:4,background:i===kpiIndex?C[s2].border:'#222',border:'none',cursor:'pointer',transition:'width 0.2s',padding:0}});
+          })
+        ),
+
+        // KPI Card - swipeable
+        h('div',{onTouchStart,onTouchEnd,style:{touchAction:'pan-y',userSelect:'none'}},
+          h('div',{style:{background:c.bg,border:'1px solid '+c.border,borderRadius:12,padding:'20px 16px',textAlign:'center',marginBottom:12}},
+            h('div',{style:{fontSize:11,color:c.text,letterSpacing:2,marginBottom:8,opacity:0.8}},KPI_LABELS[KPI_KEYS.indexOf(k)]),
+            h('div',{style:{fontSize:42,fontWeight:900,color:c.text,lineHeight:1}},
+              val!==null&&val!==undefined?(isC?val:Number(val).toFixed(1)+'%'):'—'
+            ),
+            h('div',{style:{display:'flex',justifyContent:'center',gap:20,marginTop:10}},
+              h('div',{style:{textAlign:'center'}},
+                h('div',{style:{fontSize:9,color:c.text,opacity:0.6,letterSpacing:1}},'GOAL'),
+                h('div',{style:{fontSize:13,fontWeight:700,color:c.text}},(isC?GOALS[k]:GOALS[k]+'%'))
+              ),
+              h('div',{style:{textAlign:'center'}},
+                h('div',{style:{fontSize:9,color:c.text,opacity:0.6,letterSpacing:1}},'MIN'),
+                h('div',{style:{fontSize:13,fontWeight:700,color:c.text}},(isC?MINS[k]:MINS[k]+'%'))
+              ),
+              rankNum&&h('div',{style:{textAlign:'center'}},
+                h('div',{style:{fontSize:9,color:c.text,opacity:0.6,letterSpacing:1}},'RANK'),
+                h('div',{style:{fontSize:13,fontWeight:700,color:c.text}},'#'+rankNum+' / '+scored.length)
+              )
+            )
+          )
+        ),
+
+        // Arrow nav
+        h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}},
+          h('button',{onClick:()=>setKpiIndex(i=>Math.max(i-1,0)),disabled:kpiIndex===0,style:{background:kpiIndex===0?'transparent':'#0f0f0f',border:'1px solid '+(kpiIndex===0?'transparent':'#333'),borderRadius:6,color:kpiIndex===0?'#222':'#aaa',padding:'8px 16px',cursor:kpiIndex===0?'default':'pointer',fontSize:13,fontFamily:'inherit'}},'◀'),
+          h('div',{style:{fontSize:10,color:'#444',letterSpacing:1}},
+            (kpiIndex+1)+' / '+activeKPIs.length+' · SWIPE TO NAVIGATE'
+          ),
+          h('button',{onClick:()=>setKpiIndex(i=>Math.min(i+1,activeKPIs.length-1)),disabled:kpiIndex===activeKPIs.length-1,style:{background:kpiIndex===activeKPIs.length-1?'transparent':'#0f0f0f',border:'1px solid '+(kpiIndex===activeKPIs.length-1?'transparent':'#333'),borderRadius:6,color:kpiIndex===activeKPIs.length-1?'#222':'#aaa',padding:'8px 16px',cursor:kpiIndex===activeKPIs.length-1?'default':'pointer',fontSize:13,fontFamily:'inherit'}},'▶')
+        ),
+
+        // Mini grid of all KPIs
+        h('div',{style:{display:'flex',gap:6,flexWrap:'wrap',marginTop:10}},
+          activeKPIs.map((k2,i)=>{
+            const v2=rep[k2];
+            if(v2===null||v2===undefined)return null;
+            const s2=getStatus(v2,GOALS[k2],MINS[k2]);
+            const isC2=k2==='vhi'||k2==='perks';
+            return h('div',{key:k2,onClick:()=>setKpiIndex(i),style:{flex:'1 1 calc(33% - 6px)',background:C[s2].bg,border:'2px solid '+(i===kpiIndex?C[s2].border:C[s2].border+'44'),borderRadius:8,padding:'6px 8px',textAlign:'center',cursor:'pointer',minWidth:60}},
+              h('div',{style:{fontSize:8,color:C[s2].text,opacity:0.7,letterSpacing:1,marginBottom:2}},KPI_LABELS[KPI_KEYS.indexOf(k2)]),
+              h('div',{style:{fontSize:13,fontWeight:900,color:C[s2].text}},isC2?v2:Number(v2).toFixed(1)+'%')
+            );
+          })
+        )
+      ):h('div',{style:{color:'#444',fontSize:13,textAlign:'center',padding:20}},'No data for '+allMonths[activeMo]?.label+'.')
+    );
+  })();
+
+  // Day detail panel
+  const dayPanel=selDay&&!selCalRep&&(()=>{
+    const dow=(new Date(calYear,calMonth,selDay).getDay());
+    const storeData=getRepsByDay(dow);
+    return h('div',{style:{background:'#0c0c0c',border:'1px solid #1a1a1a',borderRadius:12,padding:14,marginBottom:14}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}},
+        h('div',{style:{fontSize:14,fontWeight:900,color:'#fff'}},MONTH_NAMES[calMonth]+' '+selDay),
+        h('button',{onClick:()=>setSelDay(null),style:{background:'#0f0f0f',border:'1px solid #222',borderRadius:6,color:'#555',padding:'6px 12px',cursor:'pointer',fontSize:11,fontFamily:'inherit'}},'✕')
+      ),
+      h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
+        Object.entries(storeData).map(([store,{color,reps}])=>
+          h('div',{key:store,style:{background:color+'10',border:'1px solid '+color+'33',borderRadius:8,padding:10}},
+            h('div',{style:{fontSize:10,fontWeight:900,color,letterSpacing:1,marginBottom:8}},store.toUpperCase()+' — '+reps.length+' REPS'),
+            h('div',{style:{display:'flex',flexWrap:'wrap',gap:6}},
+              reps.map(rep=>{
+                const hasData=!!repMetrics(rep);
+                return h('button',{key:rep,onClick:()=>{setSelCalRep(rep);setKpiIndex(0);},style:{background:hasData?color+'22':'#111',border:'1px solid '+(hasData?color:'#333'),borderRadius:6,color:hasData?color:'#555',padding:'6px 10px',cursor:'pointer',fontSize:11,fontWeight:700,fontFamily:'inherit'}},rep.split(' ')[0]);
+              })
+            )
+          )
+        )
+      )
+    );
+  })();
+
+  return h('div',null,
+    // Month nav
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14,flexWrap:'wrap',gap:10}},
+      h('div',{style:{display:'flex',gap:8,alignItems:'center'}},
+        h('button',{onClick:()=>{if(calMonth===0){setCalMonth(11);setCalYear(y=>y-1);}else setCalMonth(m=>m-1);},style:{background:'#0f0f0f',border:'1px solid #222',borderRadius:8,color:'#aaa',padding:'8px 16px',cursor:'pointer',fontFamily:'inherit',fontSize:16}},'◀'),
+        h('span',{style:{fontSize:15,fontWeight:900,color:'#fff',minWidth:140,textAlign:'center'}},MONTH_NAMES[calMonth]+' '+calYear),
+        h('button',{onClick:()=>{if(calMonth===11){setCalMonth(0);setCalYear(y=>y+1);}else setCalMonth(m=>m+1);},style:{background:'#0f0f0f',border:'1px solid #222',borderRadius:8,color:'#aaa',padding:'8px 16px',cursor:'pointer',fontFamily:'inherit',fontSize:16}},'▶')
+      ),
+      h('div',{style:{display:'flex',gap:8,flexWrap:'wrap'}},
+        Object.entries(STORES).map(([name,info])=>
+          h('div',{key:name,style:{display:'flex',alignItems:'center',gap:4}},
+            h('div',{style:{width:8,height:8,borderRadius:2,background:info.color}}),
+            h('span',{style:{fontSize:9,color:info.color,fontWeight:700,letterSpacing:1}},info.short)
+          )
+        )
+      )
+    ),
+
+    metricPanel,
+    dayPanel,
+
+    // Calendar grid
+    h('div',{style:{display:'grid',gridTemplateColumns:'repeat(7,1fr)',gap:2}},
+      ['S','M','T','W','T','F','S'].map((d,i)=>
+        h('div',{key:i,style:{textAlign:'center',fontSize:10,color:'#444',padding:'4px 0',letterSpacing:1}},d)
+      ),
+      cells.map((day,idx)=>{
+        if(!day)return h('div',{key:'e'+idx,style:{minHeight:70,background:'#050505',borderRadius:6}});
+        const dow=idx%7;
+        const isToday=day===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear();
+        const isSel=selDay===day&&!selCalRep;
+        const storeData=getRepsByDay(dow);
+        const totalReps=Object.values(storeData).reduce((a,{reps})=>a+reps.length,0);
+        return h('div',{key:day,onClick:()=>{setSelDay(isSel?null:day);setSelCalRep(null);},style:{minHeight:70,background:isToday?'#0a1f0a':isSel?'#0a1020':'#0d0d0d',border:'2px solid '+(isToday?'#22c55e':isSel?'#38bdf8':'transparent'),borderRadius:8,padding:'4px 4px',cursor:'pointer',position:'relative',overflow:'hidden'}},
+          h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}},
+            h('span',{style:{fontSize:13,fontWeight:900,color:isToday?'#22c55e':isSel?'#38bdf8':'#666'}},day),
+            totalReps>0&&h('span',{style:{fontSize:8,color:'#444',fontWeight:700}},totalReps)
+          ),
+          h('div',{style:{display:'flex',flexDirection:'column',gap:2}},
+            Object.entries(storeData).map(([store,{color,reps}])=>
+              h('div',{key:store,style:{background:color+'22',borderRadius:3,padding:'1px 3px',display:'flex',alignItems:'center',gap:2}},
+                h('div',{style:{width:4,height:4,borderRadius:'50%',background:color,flexShrink:0}}),
+                h('span',{style:{fontSize:7,color,fontWeight:700,overflow:'hidden',whiteSpace:'nowrap',textOverflow:'ellipsis'}},reps.map(r=>r.split(' ')[0]).join(', '))
+              )
+            )
+          )
+        );
+      })
+    )
+  );
+}
+
+// ── Main ──────────────────────────────────────────────────────────────────────
+function Dashboard(){
+  const [tab,setTab]=useState('leaderboard');
+  const [sortKey,setSortKey]=useState('score');
+  const [filterStatus,setFilterStatus]=useState('all');
+  const [search,setSearch]=useState('');
+  const [selRep,setSelRep]=useState(null);
+  const [cmpRep,setCmpRep]=useState(null);
+  const [cmpSearch,setCmpSearch]=useState('');
+  const [trendKPI,setTrendKPI]=useState('vmp');
+  const [months,setMonths]=useState(ALL_MONTHS);
+  const [activeMo,setActiveMo]=useState(4);
+  const [newData,setNewData]=useState({name:'',vmp:'',premium:'',vhi:'',perks:'',smartquote:'',multi:''});
+  const [addMsg,setAddMsg]=useState('');
+
+  const currentData=months[activeMo].data;
+  const isMay=activeMo===4;
+
+  const scored=useMemo(()=>currentData.map(r=>({...r,score:scoreRep(r)})),[currentData]);
+
+  const filtered=useMemo(()=>{
+    let d=[...scored];
+    if(search)d=d.filter(r=>r.name.toLowerCase().includes(search.toLowerCase()));
+    if(filterStatus==='goal')d=d.filter(r=>r.score>=10);
+    if(filterStatus==='mid')d=d.filter(r=>r.score>=5&&r.score<10);
+    if(filterStatus==='below')d=d.filter(r=>r.score<5);
+    if(sortKey==='score')d.sort((a,b)=>b.score-a.score);
+    else d.sort((a,b)=>(b[sortKey]||0)-(a[sortKey]||0));
+    return d;
+  },[scored,search,filterStatus,sortKey]);
+
+  const stats=useMemo(()=>{
+    if(sortKey==='score'){
+      return{
+        atGoal:scored.filter(r=>r.score>=10).length,
+        atMin:scored.filter(r=>r.score>=5&&r.score<10).length,
+        below:scored.filter(r=>r.score<5).length,
+        label:['AT / ABOVE GOAL','BETWEEN','BELOW MIN'],
+      };
+    }
+    const goal=GOALS[sortKey], min=MINS[sortKey];
+    const isC=sortKey==='vhi'||sortKey==='perks';
+    const LBLMAP={vmp:'VMP%',premium:'Premium%',vhi:'VHI',perks:'Perks',smartquote:'SmartQ%',multi:'Multi: DF',multiLC:'Multi: LC',multiLR:'Multi: LR',multiWD:'Multi: WD'};
+    const lbl=LBLMAP[sortKey]||sortKey;
+    const fv=v=>isC?v:(Number(v).toFixed(1)+'%');
+    return{
+      atGoal:scored.filter(r=>(r[sortKey]||0)>=goal).length,
+      atMin:scored.filter(r=>(r[sortKey]||0)>=min&&(r[sortKey]||0)<goal).length,
+      below:scored.filter(r=>(r[sortKey]||0)<min).length,
+      label:[
+        lbl+' ≥ '+fv(goal),
+        fv(min)+' – '+fv(goal),
+        lbl+' < '+fv(min),
+      ],
+    };
+  },[scored,sortKey]);
+
+  const kpiAvg=useMemo(()=>KPI_KEYS.map(k=>{
+    const v=currentData.map(r=>r[k]).filter(v=>v!==undefined&&v!==null&&v>-50);
+    if(!v.length)return null;
+    return(v.reduce((a,b)=>a+b,0)/v.length);
+  }),[currentData]);
+
+  const cmpOptions=useMemo(()=>{
+    if(!selRep)return[];
+    return scored.filter(r=>r.name!==selRep.name&&(!cmpSearch||r.name.toLowerCase().includes(cmpSearch.toLowerCase())));
+  },[scored,selRep,cmpSearch]);
+
+  function addRep(){
+    const{name,vmp,premium,vhi,perks,smartquote,multi}=newData;
+    if(!name){setAddMsg('Name required.');return;}
+    const rep={name,vmp:+vmp,premium:+premium,vhi:+vhi,perks:+perks,smartquote:+smartquote,multi:multi!==''?+multi:undefined};
+    setMonths(prev=>prev.map((m,i)=>i===activeMo?{...m,data:[...m.data,rep]}:m));
+    setNewData({name:'',vmp:'',premium:'',vhi:'',perks:'',smartquote:'',multi:''});
+    setAddMsg('Added '+name);
+    setTimeout(()=>setAddMsg(''),3000);
+  }
+
+  function addMonth(){
+    const label=prompt('Month label (e.g. June 2026):');
+    if(!label)return;
+    setMonths(prev=>[...prev,{label,data:[]}]);
+    setActiveMo(months.length);
+  }
+
+  const thS={textAlign:'left',padding:'8px 10px',fontSize:10,color:'#444',letterSpacing:1,borderBottom:'1px solid #141414',textTransform:'uppercase',cursor:'pointer'};
+  const tdS={padding:'8px 10px',fontSize:12};
+  const trS=(i,sel)=>({background:sel?'#0a1f0a':i%2===0?'#0c0c0c':'#0f0f0f',borderBottom:'1px solid #141414',cursor:'pointer'});
+  const stickyTh={...thS,position:'sticky',left:0,zIndex:2,background:'#0a0a0a'};
+  const stickyTd=(sel,i)=>({...tdS,position:'sticky',left:0,zIndex:1,background:sel?'#0a1f0a':i%2===0?'#0c0c0c':'#0f0f0f',fontWeight:700});
+
+  const kpiCols=KPI_KEYS.map((k,i)=>({key:k,label:KPI_LABELS[i],isCount:k==='vhi'||k==='perks'}));
+  const visKPIs=isMay?kpiCols:kpiCols.filter(c=>c.key!=='multi'&&c.key!=='multiLC'&&c.key!=='multiLR'&&c.key!=='multiWD');
+  const focusKPI=sortKey!=='score'?visKPIs.find(c=>c.key===sortKey):null;
+  const visCols=focusKPI?[focusKPI]:visKPIs;
+
+  // HEADER
+  const header=h('div',{style:{background:'linear-gradient(135deg,#0a0f1a,#080808)',borderBottom:'1px solid #1a2a3a',padding:'20px 22px 14px'}},
+    h('div',{style:{display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:10,marginBottom:14}},
+      h('div',null,
+        h('div',{style:{display:'flex',alignItems:'center',gap:10}},
+          h('div',{style:{width:10,height:10,borderRadius:'50%',background:'#38bdf8'}}),
+          h('h1',{style:{fontSize:20,fontWeight:900,color:'#fff',margin:0}},"BLAKE'S AREA — KPI DASHBOARD")
+        ),
+        h('div',{style:{color:'#444',fontSize:10,marginTop:4,letterSpacing:2}},'MINIMUM STANDARDS · PERFORMANCE TRACKING · '+scored.length+' REPS')
+      ),
+      h('div',{style:{display:'flex',gap:6,flexWrap:'wrap'}},
+        months.map((m,i)=>h('button',{key:i,onClick:()=>setActiveMo(i),style:{background:i===activeMo?'#38bdf822':'#0f0f0f',border:'1px solid '+(i===activeMo?'#38bdf8':'#222'),borderRadius:6,color:i===activeMo?'#38bdf8':'#555',padding:'6px 12px',cursor:'pointer',fontSize:11,fontWeight:700,fontFamily:'inherit',letterSpacing:1}},m.label)),
+        h('button',{onClick:addMonth,style:{background:'#0f0f0f',border:'1px solid #222',borderRadius:6,color:'#60a5fa',padding:'6px 12px',cursor:'pointer',fontSize:11,fontWeight:700,fontFamily:'inherit',letterSpacing:1}},'+ NEW')
+      )
+    ),
+    h('div',{style:{overflowX:'auto'}},
+      h('table',{style:{borderCollapse:'collapse'}},
+        h('thead',null,h('tr',null,
+          h('th',{style:{fontSize:9,color:'#444',letterSpacing:1,padding:'3px 14px 3px 0',textAlign:'left'}},'AVG'),
+          visKPIs.map(c=>h('th',{key:c.key,style:{fontSize:9,color:'#444',letterSpacing:1,padding:'3px 14px',textAlign:'center'}},c.label))
+        )),
+        h('tbody',null,
+          h('tr',null,
+            h('td',{style:{fontSize:10,color:'#38bdf8',fontWeight:900,padding:'4px 14px 4px 0'}},'TEAM'),
+            visKPIs.map((c,i)=>{
+              const idx=KPI_KEYS.indexOf(c.key);
+              const val=kpiAvg[idx];
+              const isC=c.key==='vhi'||c.key==='perks';
+              if(val===null)return h('td',{key:c.key,style:{padding:'4px 14px',textAlign:'center',color:'#333',fontSize:12}},'—');
+              const col=val>=GOALS[c.key]?'#4ade80':val>=MINS[c.key]?'#fbbf24':'#f87171';
+              return h('td',{key:c.key,style:{fontSize:13,fontWeight:900,color:col,padding:'4px 14px',textAlign:'center'}},isC?val.toFixed(1):val.toFixed(1)+'%');
+            })
+          )
+        )
+      )
+    )
+  );
+
+  // TABS
+  const tabBar=h('div',{style:{display:'flex',gap:2,padding:'0 22px',borderBottom:'1px solid #141414'}},
+    [['leaderboard','LEADERBOARD'],['compare','REP COMPARE'],['trends','TRENDS'],['schedule','SCHEDULE'],['add-data','ADD DATA']].map(([t,l])=>
+      h('button',{key:t,onClick:()=>setTab(t),style:{padding:'9px 16px',background:tab===t?'#111':'transparent',border:'none',borderTop:tab===t?'2px solid #38bdf8':'2px solid transparent',color:tab===t?'#fff':'#444',cursor:'pointer',fontSize:11,fontWeight:700,fontFamily:'inherit',letterSpacing:1}},l)
+    )
+  );
+
+  // SEL PANEL
+  const selPanel=selRep&&h('div',{style:{background:'#080f18',border:'1px solid #38bdf833',borderRadius:10,padding:16,marginBottom:16}},
+    h('div',{style:{display:'flex',justifyContent:'space-between',marginBottom:12}},
+      h('span',{style:{fontSize:13,fontWeight:900,color:'#38bdf8'}},selRep.name),
+      h('button',{onClick:()=>{setSelRep(null);setCmpRep(null);setCmpSearch('');},style:{background:'#0f0f0f',border:'1px solid #222',borderRadius:5,color:'#555',padding:'4px 10px',cursor:'pointer',fontSize:10,fontFamily:'inherit'}},'CLOSE')
+    ),
+    h('div',{style:{display:'flex',alignItems:'center',gap:8,marginBottom:12,flexWrap:'wrap'}},
+      h('span',{style:{fontSize:11,color:'#555',letterSpacing:1}},'COMPARE:'),
+      h('input',{value:cmpSearch,onChange:e=>{setCmpSearch(e.target.value);setCmpRep(null);},placeholder:'Search...',style:{background:'#080808',border:'1px solid #222',borderRadius:6,color:'#fff',padding:'5px 10px',fontSize:12,fontFamily:'inherit',outline:'none',width:150}}),
+      cmpSearch&&cmpOptions.slice(0,5).map(r=>h('button',{key:r.name,onClick:()=>{setCmpRep(r);setCmpSearch('');},style:{background:cmpRep?.name===r.name?'#f472b622':'#0f0f0f',border:'1px solid '+(cmpRep?.name===r.name?'#f472b6':'#222'),borderRadius:5,color:cmpRep?.name===r.name?'#f472b6':'#666',padding:'3px 8px',cursor:'pointer',fontSize:11,fontFamily:'inherit'}},r.name)),
+      cmpRep&&h('span',{style:{fontSize:12,color:'#f472b6'}},'vs ',cmpRep.name,' ',h('button',{onClick:()=>setCmpRep(null),style:{background:'none',border:'none',color:'#555',cursor:'pointer',fontSize:11}},'x'))
+    ),
+    h(RadarChart,{rep1:selRep,rep2:cmpRep,allReps:scored}),
+    h(TrendChart,{rep1:selRep,rep2:cmpRep,allMonths:months,selKPI:trendKPI,onSelKPI:setTrendKPI})
+  );
+
+  // TABLE
+  const table=h('div',{style:{overflowX:'auto',WebkitOverflowScrolling:'touch',borderRadius:8,border:'1px solid #1a1a1a'}},
+    h('table',{style:{borderCollapse:'collapse',minWidth:'max-content',width:'100%'}},
+      h('thead',null,h('tr',{style:{background:'#0a0a0a'}},
+        h('th',{style:{...stickyTh,minWidth:36,textAlign:'center'}},'#'),
+        h('th',{style:{...stickyTh,left:36,minWidth:130}},'DEALER'),
+        !focusKPI&&h('th',{style:{...thS,minWidth:90}},'SCORE'),
+        visCols.map(({key,label})=>h('th',{key,style:{...thS,color:focusKPI?'#38bdf8':'#444',minWidth:90,textAlign:'center'},onClick:()=>setSortKey(key)},label+(sortKey===key?' ▾':''))),
+        focusKPI&&h('th',{style:{...thS,color:'#22c55e55',minWidth:80}},'GOAL: '+(focusKPI.isCount?GOALS[focusKPI.key]:GOALS[focusKPI.key]+'%')),
+        focusKPI&&h('th',{style:{...thS,color:'#f59e0b55',minWidth:80}},'MIN: '+(focusKPI.isCount?MINS[focusKPI.key]:MINS[focusKPI.key]+'%'))
+      )),
+      h('tbody',null,filtered.map((rep,i)=>{
+        const isSel=selRep?.name===rep.name;
+        const bg=isSel?'#0a1f0a':i%2===0?'#0c0c0c':'#0f0f0f';
+        return h('tr',{key:rep.name,style:{...trS(i,isSel)},onClick:()=>{setSelRep(isSel?null:rep);setCmpRep(null);setCmpSearch('');}},
+          h('td',{style:{...tdS,position:'sticky',left:0,zIndex:1,background:bg,color:i<3?['#ffd700','#c0c0c0','#cd7f32'][i]:'#333',fontWeight:900,textAlign:'center',minWidth:36,borderRight:'1px solid #1a1a1a'}},i+1),
+          h('td',{style:{...tdS,position:'sticky',left:36,zIndex:1,background:bg,fontWeight:700,color:isSel?'#38bdf8':'#e5e5e5',minWidth:130,borderRight:'1px solid #1a1a1a',whiteSpace:'nowrap'}},rep.name),
+          !focusKPI&&h('td',{style:{...tdS,minWidth:90}},h(ScoreDots,{score:rep.score,max:12})),
+          visCols.map(({key})=>h('td',{key,style:{...tdS,textAlign:'center',minWidth:90}},badge(rep[key],key))),
+          focusKPI&&h('td',{style:{...tdS,color:'#333',fontSize:11,textAlign:'center'}},focusKPI.isCount?GOALS[focusKPI.key]:GOALS[focusKPI.key]+'%'),
+          focusKPI&&h('td',{style:{...tdS,color:'#333',fontSize:11,textAlign:'center'}},focusKPI.isCount?MINS[focusKPI.key]:MINS[focusKPI.key]+'%')
+        );
+      }))
+    )
+  );
+
+  // LEADERBOARD TAB
+  const leaderboard=h(Fragment,null,
+    h('div',{style:{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10,marginBottom:16}},
+      [['atGoal','#22c55e','AT / ABOVE GOAL'],['atMin','#f59e0b','BETWEEN'],['below','#ef4444','DEFOW MIN']].map(([k,col,lbl])=>
+        h('div',{key:k,style:{background:'#0f0f0f',border:'1px solid '+col+'22',borderRadius:10,padding:'12px 14px'}},
+          h('div',{style:{fontSize:28,fontWeight:900,color:col,lineHeight:1}},stats[k]),
+          h('div',{style:{fontSize:10,color:'#444',marginTop:4,letterSpacing:1}},lbl)
+        )
+      )
+    ),
+    h('div',{style:{display:'flex',gap:7,marginBottom:10,flexWrap:'wrap'}},
+      h('input',{value:search,onChange:e=>setSearch(e.target.value),placeholder:'Search rep...',style:{background:'#0f0f0f',border:'1px solid #222',borderRadius:6,color:'#fff',padding:'6px 10px',fontSize:12,fontFamily:'inherit',outline:'none',width:170}}),
+      [['all','ALL','#aaa'],['goal','AT GOAL','#22c55e'],['mid','BETWEEN','#f59e0b'],['below','DEFOW MIN','#ef4444']].map(([f,l,col])=>h(Btn,{key:f,label:l,active:filterStatus===f,onClick:()=>setFilterStatus(f),col}))
+    ),
+    h('div',{style:{display:'flex',gap:7,marginBottom:16,flexWrap:'wrap',alignItems:'center'}},
+      h('span',{style:{fontSize:10,color:'#444',letterSpacing:1}},'SORT:'),
+      [['score','OVERALL'],...visKPIs.map(c=>[c.key,(c.label||c.key).replace('%','')])].map(([k,l])=>h(Btn,{key:k,label:l,active:sortKey===k,onClick:()=>setSortKey(k)}))
+    ),
+    selPanel,
+    table
+  );
+
+  // COMPARE TAB
+  const compareTab=h('div',null,
+    h('div',{style:{fontSize:13,color:'#555',marginBottom:20}},'Compare any two reps head-to-head across all KPIs.'),
+    h('div',{style:{display:'flex',gap:14,marginBottom:24,flexWrap:'wrap'}},
+      [['rep1','38bdf8','REP 1'],['rep2','f472b6','REP 2']].map(([slot,col,label])=>{
+        const current=slot==='rep1'?selRep:cmpRep;
+        const setter=slot==='rep1'?setSelRep:setCmpRep;
+        return h('div',{key:slot,style:{flex:1,minWidth:180,background:'#0f0f0f',border:'1px solid #'+col+'33',borderRadius:10,padding:14}},
+          h('div',{style:{fontSize:10,color:'#'+col,letterSpacing:1,marginBottom:8}},label),
+          h('input',{placeholder:'Type name...',style:{background:'#080808',border:'1px solid #222',borderRadius:5,color:'#fff',padding:'6px 10px',fontSize:12,fontFamily:'inherit',outline:'none',width:'100%',marginBottom:6},onChange:e=>{const q=e.target.value.toLowerCase();if(q){const f=scored.find(r=>r.name.toLowerCase().includes(q));if(f)setter(f);}}}),
+          current?h('div',{style:{fontSize:12,color:'#'+col,fontWeight:700}},current.name,' ',h('button',{onClick:()=>setter(null),style:{background:'none',border:'none',color:'#555',cursor:'pointer'}},'x')):h('div',{style:{fontSize:11,color:'#333'}},'No rep selected')
+        );
+      })
+    ),
+    selRep
+      ?h('div',{style:{background:'#0f0f0f',border:'1px solid #1a1a1a',borderRadius:12,padding:20}},h(RadarChart,{rep1:selRep,rep2:cmpRep,allReps:scored}),h(TrendChart,{rep1:selRep,rep2:cmpRep,allMonths:months,selKPI:trendKPI,onSelKPI:setTrendKPI}))
+      :h('div',{style:{textAlign:'center',color:'#333',padding:60,fontSize:13}},'Select at least one rep above.')
+  );
+
+  // TRENDS TAB
+  const trendsTab=h('div',null,
+    h('div',{style:{fontSize:13,color:'#555',marginBottom:20}},"Month-over-month averages for Blake's area."),
+    visKPIs.map((col,ki)=>{
+      const key=col.key;
+      const isC=key==='vhi'||key==='perks';
+      const fv=v=>v===null?'—':isC?v.toFixed(1):v.toFixed(1)+'%';
+      const vals=months.map(m=>getAvg(m.data,key));
+      const first=vals.find(v=>v!==null);
+      const last=[...vals].reverse().find(v=>v!==null);
+      const trend=(first!==null&&last!==null)?last-first:null;
+      const tCol=trend===null?'#555':trend>0?'#4ade80':trend<0?'#f87171':'#555';
+      return h('div',{key,style:{background:'#0f0f0f',border:'1px solid #1a1a1a',borderRadius:12,padding:18,marginBottom:14}},
+        h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}},
+          h('span',{style:{fontWeight:900,fontSize:14,color:'#fff'}},KPI_LABELS[ki+(isMay?0:0)]),
+          h('div',{style:{display:'flex',gap:16,alignItems:'center'}},
+            h('div',{style:{fontSize:11,color:'#555'}},'GOAL: ',h('span',{style:{color:'#22c55e'}},isC?GOALS[key]:GOALS[key]+'%'),' · MIN: ',h('span',{style:{color:'#f59e0b'}},isC?MINS[key]:MINS[key]+'%')),
+            trend!==null&&h('div',{style:{fontSize:13,fontWeight:900,color:tCol}},(trend>0?'▲':'▼')+' '+Math.abs(trend).toFixed(1)+(isC?'':'%'))
+          )
+        ),
+        h('div',{style:{overflowX:'auto'}},
+          h('table',{style:{borderCollapse:'collapse',width:'100%'}},
+            h('thead',null,h('tr',null,
+              months.map(m=>h('th',{key:m.label,style:{fontSize:9,color:'#444',padding:'5px 14px',textAlign:'center',letterSpacing:1,whiteSpace:'nowrap'}},m.label))
+            )),
+            h('tbody',null,
+              h('tr',null,
+                vals.map((v,mi)=>{
+                  const atG=v!==null&&v>=GOALS[key];
+                  const atM=v!==null&&v>=MINS[key];
+                  const col=v===null?'#333':atG?'#4ade80':atM?'#fbbf24':'#f87171';
+                  return h('td',{key:mi,style:{padding:'8px 14px',textAlign:'center',fontSize:14,fontWeight:900,color:col}},fv(v));
+                })
+              ),
+              h('tr',null,
+                months.map((m,mi)=>{
+                  const prev=vals[mi-1];
+                  const cur=vals[mi];
+                  if(mi===0||prev===null||cur===null)return h('td',{key:mi,style:{padding:'4px 14px',textAlign:'center',fontSize:10,color:'#333'}},'—');
+                  const diff=cur-prev;
+                  const col=diff>0?'#4ade80':diff<0?'#f87171':'#555';
+                  return h('td',{key:mi,style:{padding:'4px 14px',textAlign:'center',fontSize:10,fontWeight:700,color:col}},(diff>0?'▲':'▼')+' '+Math.abs(diff).toFixed(1)+(isC?'':'%'));
+                })
+              )
+            )
+          )
+        )
+      );
+    })
+  );
+
+  // ADD DATA TAB
+  const addTab=h('div',{style:{maxWidth:500}},
+    h('div',{style:{background:'#0f0f0f',border:'1px solid #1a1a1a',borderRadius:12,padding:20,marginBottom:14}},
+      h('div',{style:{fontWeight:900,fontSize:13,marginBottom:16,color:'#fff'}},'ADD REP — '+months[activeMo].label),
+      h('div',{style:{display:'grid',gap:10}},
+        [['name','Rep Name'],['vmp','VMP Attach %'],['premium','Premium Plans %'],['vhi','VHI (count)'],['perks','Perks (count)'],['smartquote','SmartQuote %'],['multi','Multi Smartphone % (May only)']].map(([k,label])=>
+          h('div',{key:k},
+            h('div',{style:{fontSize:10,color:'#444',letterSpacing:1,marginBottom:4}},label.toUpperCase()),
+            h('input',{value:newData[k],onChange:e=>setNewData(p=>({...p,[k]:e.target.value})),placeholder:label,style:{background:'#080808',border:'1px solid #222',borderRadius:6,color:'#fff',padding:'7px 10px',fontSize:12,fontFamily:'inherit',outline:'none',width:'100%'}})
+          )
+        ),
+        h('button',{onClick:addRep,style:{background:'#38bdf822',border:'1px solid #38bdf8',borderRadius:6,color:'#38bdf8',padding:'10px',fontSize:13,fontWeight:700,cursor:'pointer',fontFamily:'inherit',marginTop:4}},'ADD REP'),
+        addMsg&&h('div',{style:{color:'#4ade80',fontSize:12}},addMsg)
+      )
+    ),
+    h('div',{style:{background:'#0f0f0f',border:'1px solid #1a1a1a',borderRadius:12,padding:20}},
+      h('div',{style:{fontWeight:900,fontSize:13,marginBottom:10,color:'#fff'}},'MONTH MANAGEMENT'),
+      h('button',{onClick:addMonth,style:{background:'#60a5fa22',border:'1px solid #60a5fa',borderRadius:6,color:'#60a5fa',padding:'10px 16px',fontSize:12,fontWeight:700,cursor:'pointer',fontFamily:'inherit'}},'+ ADD NEW MONTH')
+    )
+  );
+
+  return h('div',{style:{background:'#080808',minHeight:'100vh',fontFamily:"'Courier New',monospace",color:'#e5e5e5'}},
+    header,tabBar,
+    h('div',{style:{padding:'18px 22px'}},
+      tab==='leaderboard'&&leaderboard,
+      tab==='compare'&&compareTab,
+      tab==='trends'&&trendsTab,
+      tab==='add-data'&&addTab,
+      tab==='schedule'&&h(CalendarTab,{scored,allMonths:months,activeMo})
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(h(Dashboard,null));
+</script>
+</body>
+</html>
