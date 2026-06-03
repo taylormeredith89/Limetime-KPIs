@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html style="background:#080808;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Game Plans</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:#080808;min-height:100vh;color:#e5e5e5;font-family:-apple-system,'Segoe UI',Arial,sans-serif;}
+body{padding:12px 10px 60px;background:#080808;}
+.hdr{background:linear-gradient(135deg,#0a1628,#0f2040);border-radius:12px;padding:14px 16px;margin-bottom:12px;text-align:center;border:1px solid #38bdf822;}
+.hdr-title{font-size:16px;font-weight:900;color:#38bdf8;}
+.hdr-sub{font-size:9px;color:#475569;letter-spacing:2px;margin-top:4px;}
+.floor-banner{background:#1a0f28;border:2px solid #a855f7;border-radius:10px;padding:12px 14px;margin-bottom:10px;}
+.floor-title{font-size:10px;font-weight:900;color:#a855f7;letter-spacing:2px;margin-bottom:8px;}
+.floor-items{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.floor-item{background:#a855f711;border:1px solid #a855f733;border-radius:6px;padding:7px 10px;}
+.floor-item-title{font-size:10px;font-weight:800;color:#c4b5fd;margin-bottom:2px;}
+.floor-item-body{font-size:9px;color:#7c3aed;line-height:1.4;}
+.rep-card{background:#0d0d0d;border:1px solid #1a1a1a;border-radius:10px;margin-bottom:8px;overflow:hidden;}
+.rep-hdr{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;}
+.rep-name{font-size:15px;font-weight:900;color:#fff;}
+.rep-shift{font-size:9px;letter-spacing:1px;margin-top:1px;}
+.rep-right{text-align:right;}
+.prev-label{font-size:8px;color:#475569;letter-spacing:1px;}
+.prev-val{font-size:13px;font-weight:900;}
+.multi-bar{padding:8px 14px;border-top:1px solid #1a1a1a;background:#10080a;display:flex;align-items:center;gap:10px;}
+.multi-label{font-size:9px;font-weight:800;color:#a855f7;letter-spacing:1px;white-space:nowrap;}
+.multi-track{flex:1;background:#1a1a1a;border-radius:20px;height:8px;overflow:hidden;position:relative;}
+.multi-fill{height:100%;border-radius:20px;}
+.multi-goal-line{position:absolute;top:0;bottom:0;width:2px;left:52%;background:rgba(255,255,255,0.2);}
+.multi-val{font-size:12px;font-weight:900;white-space:nowrap;}
+.focus-strip{padding:8px 14px;border-top:1px solid #1a1a1a;display:flex;gap:8px;align-items:flex-start;}
+.focus-label{font-size:9px;font-weight:800;color:#fbbf24;letter-spacing:1px;margin-bottom:2px;}
+.focus-text{font-size:10px;color:#d97706;line-height:1.5;}
+.cs-section{padding:8px 14px 10px;}
+.cs-label{font-size:8px;font-weight:800;color:#38bdf8;letter-spacing:2px;margin-bottom:6px;}
+.cs-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+.cs-item{background:#111;border:1px solid #1a1a1a;border-radius:6px;padding:5px 8px;}
+.cs-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;}
+.cs-name{font-size:9px;color:#64748b;font-weight:600;}
+.cs-tier{font-size:8px;font-weight:900;padding:1px 5px;border-radius:4px;}
+.cs-bottom{display:flex;justify-content:space-between;}
+.cs-need{font-size:9px;color:#475569;}
+.cs-pts{font-size:9px;font-weight:800;color:#22c55e;}
+.bl{background:#111;color:#555;border:1px solid #222;}
+.t1{background:#2a0a0a;color:#ef4444;}
+.t2{background:#2a1400;color:#f97316;}
+.t3{background:#252000;color:#eab308;}
+.t4{background:#1a2400;color:#84cc16;}
+.t5{background:#0d2a14;color:#22c55e;}
+.peak{background:#0a2040;color:#38bdf8;}
+.loading{text-align:center;padding:40px;color:#475569;font-size:13px;}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-title">📋 DAILY GAME PLANS</div>
+  <div id="hdr-sub" class="hdr-sub">LOADING...</div>
+</div>
+<div id="output"><div class="loading">Loading game plans...</div></div>
+
+<script>
+const STORES={
+  Defiance:{color:"#a78bfa",short:"DEF",
+    schedule:{
+      0:["Casias","Eric","Maverick","Thomas"],
+      1:["Eric","Keatyn","Taylor","Day"],
+      2:["Day","Nels","Dakota","Brody","Taylor"],
+      3:["Blake","Nels","Eric","Dakota","Thomas","Keatyn"],
+      4:["Pai","Taylor","Nels","Casias","Berk","Dakota","Maverick","Thomas"],
+      5:["Berk","Nels","Taylor","Dakota","Maverick","Eric","Thomas"],
+      6:["Berk","Taylor","Nels","Eric","Carson","Keatyn","Day"],
+    }
+  },
+  "Leo Crossing":{color:"#38bdf8",short:"LEO",
+    schedule:{
+      0:["Matt"],
+      1:["Jess","Upshaw","Maverick","Kaleb","Berk"],
+      2:["Chad","Alex","Maverick","Dekker","Blake","Brandon"],
+      3:["Dekker","Alex","Brody","Sean","Hooton","Matt","Kaleb"],
+      4:["Alex","Eric","Sean","Keatyn","Matt","Hooton","Brody"],
+      5:["Sean","Alex","Brody","Keatyn","Chad","Hooton"],
+      6:["Dakota","Sean","Dekker","Kaleb","Hooton","Alex"],
+    }
+  },
+  "Lima Road":{color:"#fb923c",short:"LMA",
+    schedule:{
+      0:["Berk","Upshaw"],
+      1:["Upshaw","Casias","Berk"],
+      2:["Jess","Nels","Sean"],
+      3:["Brandon","Chad"],
+      4:["Dekker","Jess","Chad","Upshaw","Steve"],
+      5:["Brandon","Upshaw","Carson","Kaleb","Jess","Dekker"],
+      6:["Brandon","Blake","Chad","Steve"],
+    }
+  },
+  Waynedale:{color:"#f472b6",short:"WYN",
+    schedule:{
+      0:["Carson","Damian"],
+      1:["Steve","Hayley","Damian","Brody"],
+      2:["Upshaw","Damian","Pai","Hayley"],
+      3:["Carson","Casias","Hayley","Pai"],
+      4:["Kaleb","Blake","Hayley","Carson","Brody","Steve"],
+      5:["Blake","Hayley","Day","Damian","Steve"],
+      6:["Pai","Thomas","Damian","Casias"],
+    }
+  },
+};
+const NAME_MAP={Upshaw:"Andrew Upshaw",Thomas:"Thomas Lindemeyer",Maverick:"Maverick Mcfadden",Eric:"Eric Short",Taylor:"Taylor Meredith",Day:"Day Holmes",Nels:"Nels Mickelson",Carson:"Carson Capps",Berk:"Nick Berkshire",Keatyn:"Keatyn Nichols",Pai:"Pai Pai",Dekker:"Justin Dekker",Damian:"Damian Fisher",Kaleb:"Kaleb Wagner",Alex:"Alex Prindle",Sean:"Sean Watkins",Brody:"Brody Benson",Matt:"Matt Middleton",Hooton:"Charles Hooten",Jess:"Jess Bonar",Brandon:"Brandon Schneider",Steve:"Steve Correa Magana",Chad:"Chad Helmke",Hayley:"Hayley Reynolds",Dakota:"Dakota Carter",Blake:"Blake Edwards",Chance:"Chance Streby",Casias:"Joey Casias"};
+const JUN_RC_DATA={
+  "Nick Berkshire":{new_act:0.0,incr_sp:1.0,ivaps:9.1,vzw_fios:0.0,perks:1.0,base_vaps:58.73,smartphones:4.0,pull:1.0,b2b:1.0},
+  "Blake Edwards":{new_act:0.0,incr_sp:0.0,ivaps:2.27,vzw_fios:0.0,perks:0.0,base_vaps:6.99,smartphones:1.0,pull:0.0,b2b:0.0},
+  "Brandon Schneider":{new_act:0.0,incr_sp:0.0,ivaps:0.0,vzw_fios:0.0,perks:0.0,base_vaps:3.34,smartphones:0.0,pull:0.0,b2b:0.0},
+  "Jess Bonar":{new_act:1.0,incr_sp:1.0,ivaps:11.38,vzw_fios:0.0,perks:3.0,base_vaps:64.57,smartphones:4.0,pull:2.0,b2b:1.0},
+  "Taylor Meredith":{new_act:4.0,incr_sp:3.0,ivaps:13.65,vzw_fios:0.0,perks:0,base_vaps:101.83,smartphones:9.0,pull:0.0,b2b:0.0},
+  "Tyler Grubb":{new_act:3.0,incr_sp:2.0,ivaps:2.27,vzw_fios:3.0,perks:4.0,base_vaps:82.11,smartphones:5.0,pull:1.0,b2b:0.0},
+  "Nels Mickelson":{new_act:0.0,incr_sp:0.0,ivaps:0.0,vzw_fios:0.0,perks:0.0,base_vaps:6.89,smartphones:0.0,pull:0.0,b2b:0.0},
+  "Alex Prindle":{new_act:0.0,incr_sp:1.0,ivaps:38.67,vzw_fios:1.0,perks:0.0,base_vaps:72.83,smartphones:3.0,pull:0.0,b2b:0.0},
+  "Pai Pai":{new_act:2.0,incr_sp:1.0,ivaps:4.55,vzw_fios:1.0,perks:3.0,base_vaps:43.52,smartphones:2.0,pull:1.0,b2b:1.0},
+  "Hayley Reynolds":{new_act:0.0,incr_sp:0.0,ivaps:2.27,vzw_fios:2.0,perks:3.0,base_vaps:54.22,smartphones:1.0,pull:1.0,b2b:0.0},
+  "Chance Streby":{new_act:0.0,incr_sp:2.0,ivaps:0.0,vzw_fios:0.0,perks:1.0,base_vaps:42.71,smartphones:4.0,pull:1.0,b2b:1.0},
+  "Steve Correa Magana":{new_act:0.0,incr_sp:0.0,ivaps:2.27,vzw_fios:0.0,perks:2.0,base_vaps:15.99,smartphones:3.0,pull:1.0,b2b:1.0},
+  "Thomas Lindemeyer":{new_act:0.0,incr_sp:0.0,ivaps:2.27,vzw_fios:0.0,perks:1.0,base_vaps:3.17,smartphones:0.0,pull:1.0,b2b:0.0},
+  "Sean Watkins":{new_act:0.0,incr_sp:0.0,ivaps:4.55,vzw_fios:0.0,perks:1.0,base_vaps:12.27,smartphones:1.0,pull:1.0,b2b:1.0},
+  "Chad Helmke":{new_act:0.0,incr_sp:1.0,ivaps:0.0,vzw_fios:0.0,perks:0.0,base_vaps:16.26,smartphones:2.0,pull:0.0,b2b:0.0},
+  "Damian Fisher":{new_act:3.0,incr_sp:4.0,ivaps:34.12,vzw_fios:3.0,perks:9.0,base_vaps:140.82,smartphones:10.0,pull:6.0,b2b:3.0},
+  "Andrew Upshaw":{new_act:1.0,incr_sp:1.0,ivaps:11.38,vzw_fios:1.0,perks:2.0,base_vaps:94.46,smartphones:6.0,pull:3.0,b2b:0.0},
+  "Charles Hooten":{new_act:0.0,incr_sp:0.0,ivaps:0.0,vzw_fios:0.0,perks:0.0,base_vaps:-3.3,smartphones:0.0,pull:0.0,b2b:0.0},
+  "Selena Macias-Guadarrama":{new_act:1.0,incr_sp:1.0,ivaps:2.27,vzw_fios:0.0,perks:1.0,base_vaps:8.97,smartphones:2.0,pull:0.0,b2b:0.0},
+  "Kaleb Wagner":{new_act:0.0,incr_sp:0.0,ivaps:4.55,vzw_fios:0.0,perks:1.0,base_vaps:32.59,smartphones:1.0,pull:1.0,b2b:0.0},
+  "Joey Casias":{new_act:0.0,incr_sp:0.0,ivaps:2.27,vzw_fios:0.0,perks:0.0,base_vaps:20.24,smartphones:1.0,pull:0.0,b2b:0.0},
+  "Keatyn Nichols":{new_act:2.0,incr_sp:0.0,ivaps:6.83,vzw_fios:0.0,perks:2.0,base_vaps:32.72,smartphones:2.0,pull:0.0,b2b:0.0},
+  "Carson Capps":{new_act:0.0,incr_sp:0.0,ivaps:0.0,vzw_fios:0.0,perks:0.0,base_vaps:6.0,smartphones:0.0,pull:0.0,b2b:0.0},
+  "Justin Dekker":{new_act:0.0,incr_sp:0.0,ivaps:2.27,vzw_fios:1.0,perks:0.0,base_vaps:20.73,smartphones:1.0,pull:0.0,b2b:0.0},
+  "Dakota Carter":{new_act:0.0,incr_sp:0.0,ivaps:0.0,vzw_fios:0.0,perks:1.0,base_vaps:0.9,smartphones:0.0,pull:1.0,b2b:0.0},
+  "Maverick Mcfadden":{new_act:0.0,incr_sp:0.0,ivaps:2.27,vzw_fios:1.0,perks:1.0,base_vaps:54.75,smartphones:4.0,pull:1.0,b2b:0.0},
+  "Day Holmes":{new_act:4.0,incr_sp:3.0,ivaps:4.55,vzw_fios:0.0,perks:4.0,base_vaps:65.16,smartphones:6.0,pull:0.0,b2b:0.0},
+  "Brody Benson":{new_act:3.0,incr_sp:1.0,ivaps:6.83,vzw_fios:0.0,perks:4.0,base_vaps:55.32,smartphones:3.0,pull:1.0,b2b:0.0},
+  "Eric Short":{new_act:2.0,incr_sp:1.0,ivaps:6.83,vzw_fios:0.0,perks:2.0,base_vaps:73.6,smartphones:6.0,pull:0.0,b2b:0.0},
+};
+const JUN_MULTI_DATA={"Brody Benson": 100.0, "Day Holmes": 66.67, "Taylor Meredith": 55.56, "Nick Berkshire": 50.0, "Eric Short": 33.33, "Keatyn Nichols": 0.0, "Maverick Mcfadden": 0.0, "Joey Casias": 0.0, "Nels Mickelson": 0.0, "Sean Watkins": 0.0, "Chad Helmke": 100.0, "Alex Prindle": 66.67, "Jess Bonar": 66.67, "Andrew Upshaw": 40.0, "Blake Edwards": 0.0, "Chance Streby": 0.0, "Justin Dekker": 0.0, "Kaleb Wagner": 0.0, "Selena Macias-Guadarrama": 0.0, "Steve Correa Magana": 0.0, "Carson Capps": 0.0, "Damian Fisher": 70.0, "Tyler Grubb": 66.67, "Pai Pai": 100.0, "Hayley Reynolds": 0.0};
+const CS_TIERS={
+  new_act:     [[31,1000],[26,750],[24,500],[20,390],[11,300],[5,200],[2,100]],
+  incr_sp:     [[null,null],[27,650],[25,490],[19,360],[8,290],[4,180],[2,85]],
+  ivaps:       [[null,null],[182,600],[137.3,460],[122.5,360],[65.1,260],[42.7,150],[20.2,75]],
+  vzw_fios:    [[null,null],[null,null],[14,445],[9,340],[4,205],[2,140],[2,75]],
+  perks:       [[null,null],[null,null],[36,365],[26,260],[20,180],[18,140],[14,75]],
+  base_vaps:   [[null,null],[null,null],[800,300],[705,250],[415,170],[325,100],[225,50]],
+  smartphones: [[null,null],[null,null],[60,300],[52,250],[31,170],[21,100],[12,50]],
+  pull:        [[null,null],[null,null],[26,265],[18,190],[8,130],[4,80],[2,35]],
+  b2b:         [[null,null],[null,null],[17,265],[8,190],[2,130],[1,80],[1,35]],
+};
+const MAY_DATA=[
+  {name:"Blake Edwards",vmp:31.82,premium:39.13,vhi:4,perks:18,smartquote:26.88},
+  {name:"Alex Prindle",vmp:45.45,premium:80.0,vhi:1,perks:8,smartquote:41.94,multi:48.65},
+  {name:"Andrew Upshaw",vmp:59.09,premium:75.0,vhi:2,perks:17,smartquote:5.71,multi:43.48},
+  {name:"Brandon Schneider",vmp:28.21,premium:77.78,vhi:3,perks:20,smartquote:0,multi:58.93},
+  {name:"Brody Benson",vmp:22.22,premium:78.57,vhi:3,perks:13,smartquote:0,multi:10.0},
+  {name:"Carson Capps",vmp:90.0,premium:71.43,vhi:3,perks:12,smartquote:99.73,multi:50.0},
+  {name:"Chad Helmke",vmp:69.23,premium:94.44,vhi:2,perks:10,smartquote:30.0,multi:34.48},
+  {name:"Chance Streby",vmp:33.33,premium:86.21,vhi:3,perks:11,smartquote:0,multi:37.5},
+  {name:"Charles Hooten",vmp:27.27,premium:41.67,vhi:0,perks:6,smartquote:47.12,multi:29.17},
+  {name:"Dakota Carter",vmp:100.0,premium:72.41,vhi:4,perks:39,smartquote:47.6,multi:77.19},
+  {name:"Damian Fisher",vmp:44.44,premium:69.23,vhi:2,perks:12,smartquote:30.0,multi:30.43},
+  {name:"Day Holmes",vmp:20.0,premium:66.67,vhi:3,perks:8,smartquote:83.22,multi:37.5},
+  {name:"Eric Short",vmp:47.37,premium:62.5,vhi:1,perks:6,smartquote:33.23,multi:44.64},
+  {name:"Hayley Reynolds",vmp:36.36,premium:53.33,vhi:2,perks:19,smartquote:8.7,multi:43.75},
+  {name:"Jess Bonar",vmp:100.0,premium:76.47,vhi:1,perks:10,smartquote:37.5,multi:48.0},
+  {name:"Joey Casias",vmp:82.35,premium:82.05,vhi:4,perks:32,smartquote:31.76,multi:42.86},
+  {name:"Justin Dekker",vmp:44.83,premium:78.38,vhi:3,perks:19,smartquote:46.39,multi:49.09},
+  {name:"Kaleb Wagner",vmp:64.71,premium:88.24,vhi:1,perks:14,smartquote:36.0,multi:58.33},
+  {name:"Keatyn Nichols",vmp:25.0,premium:63.16,vhi:1,perks:15,smartquote:54.55,multi:40.74},
+  {name:"Matt Middleton",vmp:11.11,premium:73.33,vhi:2,perks:4,smartquote:5.0,multi:46.43},
+  {name:"Maverick Mcfadden",vmp:25.0,premium:81.48,vhi:1,perks:3,smartquote:51.86,multi:26.32},
+  {name:"Nels Mickelson",vmp:56.52,premium:68.0,vhi:5,perks:8,smartquote:29.63,multi:35.9},
+  {name:"Nick Berkshire",vmp:40.0,premium:87.5,vhi:4,perks:14,smartquote:20.59,multi:40.91},
+  {name:"Pai Pai",vmp:69.23,premium:76.47,vhi:3,perks:1,smartquote:43.75,multi:47.37},
+  {name:"Sean Watkins",vmp:16.67,premium:80.0,vhi:1,perks:7,smartquote:18.75,multi:40.54},
+  {name:"Selena Macias-Guadarrama",vmp:84.62,premium:94.44,vhi:2,perks:12,smartquote:15.63,multi:27.27},
+  {name:"Steve Correa Magana",vmp:42.86,premium:65.0,vhi:0,perks:3,smartquote:59.09,multi:29.03},
+  {name:"Taylor Meredith",vmp:59.09,premium:70.0,vhi:5,perks:23,smartquote:54.26,multi:58.73},
+  {name:"Thomas Lindemeyer",vmp:41.67,premium:78.26,vhi:2,perks:9,smartquote:71.0,multi:32.26}
+];
+const GOALS={vmp:56,premium:63,vhi:3,perks:20,smartquote:55,multi:52};
+const MINS={vmp:43.5,premium:54,vhi:2,perks:14,smartquote:40,multi:48};
+
+const TIER_NAMES=['PEAK','PEAK','L5','L4','L3','L2','L1','BELOW'];
+const TIER_CSS=['peak','peak','t5','t4','t3','t2','t1','bl'];
+const CS_KEYS=['new_act','incr_sp','ivaps','vzw_fios','base_vaps','smartphones','pull','b2b'];
+const CS_LABELS={new_act:'New Act',incr_sp:'Incr SP',ivaps:'iVAPs',vzw_fios:'VZW Internet',base_vaps:'Base VAPs',smartphones:'Phones',pull:'Pull Through',b2b:'B2B'};
+const STORE_COLORS={Defiance:'#a78bfa','Leo Crossing':'#38bdf8','Lima Road':'#fb923c',Waynedale:'#f472b6'};
+
+function getTierIdx(key,val){
+  if(val==null)return 7;
+  const t=CS_TIERS[key]||[];
+  for(let i=0;i<t.length;i++){if(t[i][0]!==null&&val>=t[i][0])return i;}
+  return 7;
+}
+function getNext(key,val,cur){
+  const t=CS_TIERS[key]||[];
+  for(let i=cur-1;i>=0;i--){
+    if(t[i][0]!==null)return{tier:TIER_NAMES[i],gap:(t[i][0]-val).toFixed(1),pts:t[i][1]-(cur<7?t[cur][1]:0)};
+  }
+  return null;
+}
+function getMay(name){return MAY_DATA.find(r=>r.name===name)||null;}
+function countGoal(may){
+  if(!may)return'—';
+  let n=0;
+  ['vmp','premium','vhi','perks','smartquote','multi'].forEach(k=>{if((may[k]||0)>=GOALS[k])n++;});
+  return n+'/6';
+}
+function getFocus(name,may,cs,multi){
+  if(!may)return'No May data. Focus on VMP on every device, lead with the second phone, SmartQ on every smartphone.';
+  const vmpLow=may.vmp<MINS.vmp,multiLow=(multi||0)<MINS.multi,sqLow=may.smartquote<MINS.smartquote;
+  const newActs=cs&&cs.new_act||0;
+  const atGoal=parseInt(countGoal(may))||0;
+  if(vmpLow&&multiLow)return`VMP at ${may.vmp.toFixed(0)}% and multi at ${(multi||0).toFixed(0)}% in May — both below minimum. Quote VMP in FIRST before starting the transaction. Lead with the second phone before the customer commits to one device.`;
+  if(vmpLow)return`VMP was ${may.vmp.toFixed(0)}% in May — below minimum. Quote it in before the transaction starts, not at the end. Check every account for unprotected lines.`;
+  if(multiLow&&(multi||0)===0)return`Multi at 0% — the second phone conversation isn't happening. Lead with it before the customer picks a device. One duo moves New Act, Incremental, Base VAPs and iVAPs simultaneously.`;
+  if(multiLow)return`Multi at ${(multi||0).toFixed(0)}% — below goal. Lead with the second phone before the customer commits to one device.`;
+  if(sqLow&&may.smartquote>0)return`SmartQ at ${may.smartquote.toFixed(0)}% in May — needs to be on every smartphone today. Check every account for the blue banner on VZW Internet.`;
+  if(atGoal>=4)return`${atGoal}/6 at goal in May — strong month. Keep the same habits today. Check every account for the blue banner and lead with the duo conversation.`;
+  if(newActs===0)return`Nothing on the board yet for June — get your first transaction going. Check every account address for the blue banner.`;
+  return`${newActs} new act${newActs===1?'':'s'} on the board. Keep building — lead with the second phone, check every account for the blue banner, and use SmartQ on every smartphone.`;
+}
+
+// Read URL params and render
+window.onload=function(){
+  const p=new URLSearchParams(window.location.search);
+  const store=p.get('store')||'';
+  const dateStr=p.get('date')||'';
+  const repsParam=p.get('reps')||'';
+  const roster=repsParam?repsParam.split(',').filter(Boolean):[];
+
+  if(!store||!roster.length){
+    document.getElementById('output').innerHTML='<div class="loading">No game plan data found. Ask your manager for the correct link.</div>';
+    return;
+  }
+
+  const sc=STORE_COLORS[store]||'#38bdf8';
+  const d=dateStr?new Date(dateStr+'T12:00:00'):new Date();
+  const dateLabel=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}).toUpperCase();
+  document.getElementById('hdr-sub').textContent=store.toUpperCase()+' · '+dateLabel;
+
+  let html=`<div class="floor-banner">
+    <div class="floor-title">🏪 STORE PRIORITIES TODAY</div>
+    <div class="floor-items">
+      <div class="floor-item"><div class="floor-item-title">🔥 MULTI FIRST</div><div class="floor-item-body">Lead with the second phone before the customer commits. A duo moves 4 CScore metrics at once.</div></div>
+      <div class="floor-item"><div class="floor-item-title">📱 SMARTQ EVERY TIME</div><div class="floor-item-body">SmartQ on every smartphone — no exceptions today.</div></div>
+      <div class="floor-item"><div class="floor-item-title">🏠 BLUE BANNER CHECK</div><div class="floor-item-body">Verify address in every account. Look for the blue banner. If it's there, say it out loud.</div></div>
+      <div class="floor-item"><div class="floor-item-title">🤝 HUDDLE UP</div><div class="floor-item-body">Work as a team on every customer. Better workflow creates bigger sales.</div></div>
+    </div>
+  </div>`;
+
+  roster.forEach(name=>{
+    const may=getMay(name);
+    const cs=JUN_RC_DATA[name]||null;
+    const multi=JUN_MULTI_DATA[name]??null;
+    const atGoal=countGoal(may);
+    const atGoalNum=parseInt(atGoal)||0;
+    const gc=atGoalNum>=4?'#22c55e':atGoalNum>=2?'#eab308':'#ef4444';
+    const mc=multi===null?'#555':multi>=52?'#22c55e':multi>=48?'#eab308':'#ef4444';
+    const mf=multi===null?0:Math.min(100,multi);
+    const focus=getFocus(name,may,cs,multi);
+    const icon=atGoalNum>=4?'⭐':(!multi||multi===0)?'🔥':'⚡';
+    const csRows=CS_KEYS.map(key=>{
+      const val=cs?(cs[key]||0):0;
+      const ti=getTierIdx(key,val);
+      const nt=getNext(key,val,ti);
+      const disp=val%1===0?val:val.toFixed(1);
+      return`<div class="cs-item"><div class="cs-top"><span class="cs-name">${CS_LABELS[key]} (${disp})</span><span class="cs-tier ${TIER_CSS[Math.min(ti,7)]}">${TIER_NAMES[Math.min(ti,7)]}</span></div><div class="cs-bottom"><span class="cs-need">${nt?'+'+nt.gap+' for '+nt.tier:'✓ MAX'}</span><span class="cs-pts">${nt?'+'+nt.pts+'pts':''}</span></div></div>`;
+    }).join('');
+
+    html+=`<div class="rep-card">
+      <div class="rep-hdr" style="background:linear-gradient(135deg,#0a0a0a,#111);border-bottom:2px solid ${sc}44;">
+        <div><div class="rep-name">${name}</div><div class="rep-shift" style="color:${sc}88;">${store} · ${d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</div></div>
+        <div class="rep-right"><div class="prev-label">MAY AT GOAL</div><div class="prev-val" style="color:${gc}">${may?atGoal:'—'}</div></div>
+      </div>
+      <div class="multi-bar">
+        <span class="multi-label">MULTI%</span>
+        <div class="multi-track"><div class="multi-fill" style="width:${mf}%;background:${mc};"></div><div class="multi-goal-line"></div></div>
+        <span class="multi-val" style="color:${mc}">${multi!==null?multi.toFixed(1)+'%':'—'}</span>
+      </div>
+      <div class="focus-strip">
+        <div style="font-size:16px;flex-shrink:0;margin-top:1px;">${icon}</div>
+        <div><div class="focus-label">TODAY'S FOCUS</div><div class="focus-text">${focus}</div></div>
+      </div>
+      <div class="cs-section">
+        <div class="cs-label">JUNE C·SCORE</div>
+        <div class="cs-grid">${csRows}</div>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('output').innerHTML=html;
+};
+</script>
+</body>
+</html>
